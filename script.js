@@ -1,5 +1,5 @@
 (function(){'use strict';
-
+ 
 /* ---------- icons ---------- */
 const IC={
  dashboard:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
@@ -29,39 +29,40 @@ const IC={
  bolt:'<polygon points="13 2 4 14 12 14 11 22 20 10 12 10 13 2"/>',
  box:'<path d="M21 8v8a2 2 0 0 1-1 1.73l-7 4a2 2 0 0 1-2 0l-7-4A2 2 0 0 1 3 16V8a2 2 0 0 1 1-1.73l7-4a2 2 0 0 1 2 0l7 4A2 2 0 0 1 21 8z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/>',
  dots:'<circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/>',
- info:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
+ info:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+ chart:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+ award:'<circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-2.8L17 22l-1.5-8"/>'
 };
 function icon(n,cls){return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(IC[n]||'')+'</svg>';}
-
+ 
 /* ---------- stations & roles ---------- */
 const STATIONS={
  dashboard:{name:'Command Center',short:'Dashboard',icon:'dashboard',color:'#3b4655',dot:'#3b4655'},
  inspections:{name:'Inspections',short:'Inspect',icon:'inspections',color:'#21406a',dot:'#21406a'},
  hospital:{name:'Robot Hospital',short:'Hospital',icon:'hospital',color:'#2c6e6a',dot:'#2c6e6a'},
  spares:{name:'Spare Parts',short:'Spares',icon:'box',color:'#5b5378',dot:'#5b5378'},
- emergency:{name:'Flying Squad',short:'Flying Sq.',icon:'emergency',color:'#21406a',dot:'#c2563a'},
  queueing:{name:'Queueing',short:'Queue',icon:'queueing',color:'#272d37',dot:'#272d37'},
  judging:{name:'Judging',short:'Judging',icon:'judging',color:'#8d2f33',dot:'#8d2f33'}
 };
 const ROLE_ACCESS={
- 'Lead / Admin':{edit:['inspections','hospital','spares','emergency','queueing','judging'],viewJudge:true},
+ 'Lead / Admin':{edit:['inspections','hospital','spares','queueing','judging'],viewJudge:true},
  'Inspector':{edit:['inspections'],viewJudge:false},
- 'Robot Hospital Tech':{edit:['hospital','emergency'],viewJudge:false},
+ 'Robot Hospital Tech':{edit:['hospital'],viewJudge:false},
  'Spare Parts':{edit:['spares'],viewJudge:false},
  'Queuer':{edit:['queueing'],viewJudge:false},
  'Judge':{edit:['judging'],viewJudge:true}
 };
-
+ 
 /* ---------- login personas (fast login) ---------- */
 const USERS=[
  {name:'Caitlin',pass:'admin2026',role:'Lead / Admin',home:'dashboard',c:'#3b4655',desc:'Full access \u00b7 every station'},
  {name:'Roberto',pass:'inspect',role:'Inspector',home:'inspections',c:'#21406a',desc:'Robot inspections'},
- {name:'Franky',pass:'repair',role:'Robot Hospital Tech',home:'hospital',c:'#2c6e6a',desc:'Robot Hospital + Flying Squad'},
+ {name:'Franky',pass:'repair',role:'Robot Hospital Tech',home:'hospital',c:'#2c6e6a',desc:'Robot Hospital \u00b7 repairs and field fixes'},
  {name:'Doc',pass:'parts',role:'Spare Parts',home:'spares',c:'#5b5378',desc:'Spare parts desk'},
  {name:'Emily',pass:'queue',role:'Queuer',home:'queueing',c:'#272d37',desc:'Match queueing'},
  {name:'Chucks',pass:'judge',role:'Judge',home:'judging',c:'#8d2f33',desc:'Judging panel'}
 ];
-
+ 
 /* ---------- volunteer pool ---------- */
 const VOLUNTEERS=[
  {n:'Caitlin',r:'Lead / Admin',c:'#3b4655'},
@@ -74,9 +75,9 @@ const VOLUNTEERS=[
  {n:'Arjun Patel',r:'Robot Hospital Tech',c:'#2c6e6a'},
  {n:'Grace Mwangi',r:'Robot Hospital Tech',c:'#2c6e6a'},
  {n:'Doc',r:'Spare Parts',c:'#5b5378'},
- {n:'Min-jun Kim',r:'Flying Squad',c:'#c2563a'},
- {n:'Kwame Osei',r:'Flying Squad',c:'#c2563a'},
- {n:'Lucas Silva',r:'Flying Squad',c:'#c2563a'},
+ {n:'Min-jun Kim',r:'Robot Hospital',c:'#c2563a'},
+ {n:'Kwame Osei',r:'Robot Hospital',c:'#c2563a'},
+ {n:'Lucas Silva',r:'Robot Hospital',c:'#c2563a'},
  {n:'Emily',r:'Queuer',c:'#272d37'},
  {n:'Sofia Rossi',r:'Queuer',c:'#272d37'},
  {n:'Nadia Petrova',r:'Queuer',c:'#272d37'},
@@ -85,7 +86,7 @@ const VOLUNTEERS=[
  {n:'Priya Sharma',r:'Judge',c:'#8d2f33'}
 ];
 function volColor(name){const v=VOLUNTEERS.find(x=>x.n===name);return v?v.c:'#6b7585';}
-
+ 
 /* ---------- countries (lowercase ISO for flagcdn) ---------- */
 const COUNTRIES=[
  ['us','United States'],['ca','Canada'],['mx','Mexico'],['br','Brazil'],['ar','Argentina'],['cl','Chile'],['co','Colombia'],['pe','Peru'],['ve','Venezuela'],['ec','Ecuador'],
@@ -111,10 +112,10 @@ const COUNTRIES=[
  ['cv','Cabo Verde'],['st','S\u00e3o Tom\u00e9 & Pr.'],['km','Comoros'],['sc','Seychelles'],['dj','Djibouti'],['er','Eritrea'],['ss','South Sudan'],['td','Chad'],['cf','Central African Rep.'],['gn','Guinea'],
  ['gw','Guinea-Bissau'],['gq','Equatorial Guinea'],['bi','Burundi'],['ls','Lesotho'],['nr','Nauru'],['pw','Palau'],['mh','Marshall Islands'],['tv','Tuvalu']
 ];
-
+ 
 /* ---------- deterministic seed ---------- */
 function rnd(i){const x=Math.sin(i*97.13+3.7)*10000;return x-Math.floor(x);}
-
+ 
 /* ---------- inspections data ---------- */
 const INSP_ITEMS=['Dimensions','Material Used','Code','Safety','Lights'];
 const inspectorPool=VOLUNTEERS.filter(v=>v.r==='Inspector').map(v=>v.n);
@@ -136,7 +137,7 @@ const TEAMS=COUNTRIES.map(function(c,i){
  return {id:101+i,code:c[0],country:c[1],pit:'Pit '+String.fromCharCode(65+(i%6))+(1+(i%19)),items:items,overall:overall,inspector:inspector};
 });
 function teamByCode(code){return TEAMS.find(function(t){return t.code===code;});}
-
+ 
 /* ---------- robot hospital tickets ---------- */
 const TICKETS=[
  {id:'RH241',code:'ng',team:'Nigeria',iss:'Drive motor controller overheating, intermittent cut outs under load',type:'Mechanical',pri:'high',st:'In progress',tech:'Franky',open:34,log:[['Opened, flagged at the queue',34],['Franky claimed the ticket',28],['Swapped motor controller, bench testing now',9]]},
@@ -154,17 +155,17 @@ const TICKETS=[
  {id:'RH244',code:'gb',team:'United Kingdom',iss:'Gripper servo stripped, replace and recalibrate',type:'Mechanical',pri:'low',st:'Waiting',tech:null,open:13,log:[['Opened by team',13]]},
  {id:'RH232',code:'au',team:'Australia',iss:'Battery not holding charge, swap and log voltage',type:'Mechanical',pri:'normal',st:'Done',tech:'Aisha Rahman',open:71,res:'Swapped to a charged pack, retired the old battery.',log:[['Opened by team',71],['Done',44]]}
 ];
-
+ 
 /* ---------- flying squad (match critical) ---------- */
 const T0=Date.now(), MIN=60000;
-const EMERGENCIES=[
- {id:'FS12',code:'mx',team:'Mexico',q:'Q36',at:T0+2.4*MIN,iss:'Robot won\u2019t power on at the queue, main breaker keeps tripping',st:'On it',tech:'Franky'},
- {id:'FS13',code:'se',team:'Sweden',q:'Q36',at:T0+2.4*MIN,iss:'Loose battery strap, failed safety at field entry',st:'On it',tech:'Min-jun Kim'},
- {id:'FS14',code:'ph',team:'Philippines',q:'Q37',at:T0+9*MIN,iss:'Intake roller jammed, needs a fast clear before queue',st:'Waiting',tech:null},
- {id:'FS15',code:'za',team:'South Africa',q:'Q38',at:T0+15*MIN,iss:'Controller pairing dropped, repair and verify',st:'Waiting',tech:'Kwame Osei'},
- {id:'FS11',code:'tr',team:'Turkey',q:'Q35',at:T0-3*MIN,iss:'Bumper detached mid match, reattached at field',st:'Resolved',tech:'Lucas Silva'}
-];
-
+// Match critical field repairs and in-progress next-match countdowns fold into the Robot Hospital.
+TICKETS.push(
+ {id:'RH246',code:'ph',team:'Philippines',iss:'Robot won\u2019t power on at the queue, main breaker keeps tripping',type:'Mechanical',pri:'high',st:'In progress',tech:'Franky',open:7,match:'Q36',matchAt:T0+2.4*MIN,log:[['Flagged at field entry',7],['Franky on it at the queue',3]]},
+ {id:'RH247',code:'ca',team:'Canada',iss:'Intake roller jammed, needs a fast clear before the match',type:'Mechanical',pri:'high',st:'In progress',tech:'Min-jun Kim',open:5,match:'Q37',matchAt:T0+9*MIN,log:[['Jam reported before queue',5],['Min-jun clearing it',2]]},
+ {id:'RH248',code:'id',team:'Indonesia',iss:'Controller pairing dropped, repair and verify link',type:'Software',pri:'high',st:'Waiting',tech:null,open:4,match:'Q38',matchAt:T0+15*MIN,log:[['Pairing dropped at field',4]]}
+);
+[['RH241','Q36',T0+4*MIN],['RH236','Q39',T0+22*MIN],['RH235','Q37',T0+9*MIN],['RH234','Q40',T0+28*MIN]].forEach(function(s){var t=TICKETS.find(function(x){return x.id===s[0];});if(t){t.match=s[1];t.matchAt=s[2];}});
+ 
 /* ---------- matches / queueing ---------- */
 const MATCHES=[
  {q:'Q35',at:T0-8*MIN,table:4,played:true,A:['us','ke','fr'],B:['de','br','in']},
@@ -176,15 +177,15 @@ const MATCHES=[
  {q:'Q41',at:T0+36*MIN,table:5,A:['jp','co','cz'],B:['ke','ro','fi']},
  {q:'Q42',at:T0+43*MIN,table:2,A:['br','mx','at'],B:['fr','gr','rs']}
 ];
-const QSTATES=['Not queued','Queued','On deck','At field','Present','Missing'];
+const QSTATES=['Not queued','Queued','Missing'];
 const queueState={};
 MATCHES.forEach(function(m){m.A.concat(m.B).forEach(function(code){queueState[m.q+'_'+code]='Not queued';});});
 function setQ(q,code,s){queueState[q+'_'+code]=s;}
-['mx','jp','ng','gb','se'].forEach(function(c){setQ('Q36',c,'At field');});
+['mx','jp','ng','gb','se'].forEach(function(c){setQ('Q36',c,'Queued');});
 setQ('Q36','eg','Missing');
-['ca','au','ph','kr','za','it'].forEach(function(c){setQ('Q37',c,'On deck');});
+['ca','au','ph','kr','za','it'].forEach(function(c){setQ('Q37',c,'Queued');});
 ['nl','ar','es','pl'].forEach(function(c){setQ('Q38',c,'Queued');});
-
+ 
 /* ---------- judging ---------- */
 const JCRIT=['Engineering Doc','Robot Design','Innovation','Teamwork & GP','Global Impact'];
 const JUDGE_TEAMS=[
@@ -199,24 +200,44 @@ const JUDGE_TEAMS=[
  {code:'ng',scores:[3.5,4,4.5,4.5,5],judge:'Chucks',note:'Compelling local-impact story around wildfire response.'},
  {code:'mx',scores:[4,4,3.5,4,4],judge:'Priya Sharma',note:''}
 ];
-
+JUDGE_TEAMS.forEach(function(r){r.scores=r.scores.map(function(v){return v*2;});});
+const JMAX=10;
+const AWARDS=['Albert Einstein Award for International Excellence','FIRST Global Grand Challenge Award','Zhang Heng Award for Engineering Design','Ustad Ahmad Lahori Award for Innovation in Engineering','Dr. Mae Jemison Award for International Unity','Raja\u00e2 Cherkaoui El Moursli Award for Courageous Achievement','Sofia Kovalevskaya Award for International Journey','Al-Khwarizmi Award for Outstanding Supporter','Francisco Jos\u00e9 de Caldas Award for Sustainable Excellence','Gracious Professionalism Award'];
+JUDGE_TEAMS.push(
+ {code:'ca',scores:[8,9,8,9,8],judge:'Mei Lin Chen',note:'Clean modular drivetrain, well documented.',awards:[]},
+ {code:'au',scores:[9,8,8,8,9],judge:'Chucks',note:'',awards:[]},
+ {code:'gb',scores:[8,8,9,8,8],judge:'Priya Sharma',note:'Creative fire suppression mechanism.',awards:[]},
+ {code:'it',scores:[7,8,8,9,8],judge:'Mei Lin Chen',note:'',awards:[]},
+ {code:'es',scores:[8,7,8,8,9],judge:'Chucks',note:'',awards:[]},
+ {code:'nl',scores:[9,9,8,8,7],judge:'Priya Sharma',note:'Strong engineering notebook.',awards:[]},
+ {code:'pl',scores:[7,8,7,8,8],judge:'Mei Lin Chen',note:'',awards:[]},
+ {code:'se',scores:[8,8,8,7,8],judge:'Chucks',note:'',awards:[]},
+ {code:'eg',scores:[8,7,9,8,8],judge:'Priya Sharma',note:'Resourceful build with limited parts.',awards:[]},
+ {code:'za',scores:[7,8,8,9,9],judge:'Mei Lin Chen',note:'Outstanding community outreach story.',awards:[]},
+ {code:'ph',scores:[8,8,7,8,8],judge:'Chucks',note:'',awards:[]},
+ {code:'id',scores:[7,7,8,8,8],judge:'Priya Sharma',note:'',awards:[]},
+ {code:'ua',scores:[9,9,9,8,10],judge:'Chucks',note:'Remarkable resilience and teamwork under hardship.',awards:[]},
+ {code:'cl',scores:[7,8,8,8,7],judge:'Mei Lin Chen',note:'',awards:[]}
+);
+JUDGE_TEAMS.forEach(function(r){if(!r.awards)r.awards=[];});
+var _aw={jp:[2,3],ke:[4,9],ng:[8,4],kr:[0],us:[4],ua:[5,9],nl:[2],za:[4]};
+Object.keys(_aw).forEach(function(c){var r=JUDGE_TEAMS.find(function(x){return x.code===c;});if(r)r.awards=_aw[c].map(function(i){return AWARDS[i];});});
+ 
 /* ---------- activity feed ---------- */
 const ACTIVITY=[
  {ic:'check',tone:'ok',t:'Japan passed full inspection',s:'All five categories cleared',m:4,station:'inspections'},
- {ic:'bolt',tone:'hot',t:'Flying Squad dispatched to Mexico',s:'Q36 \u00b7 power failure at the queue',m:7,station:'emergency'},
+ {ic:'bolt',tone:'hot',t:'Philippines pulled to the Robot Hospital',s:'Will not power on at the queue before Q36',m:7,station:'hospital'},
  {ic:'flag',tone:'mut',t:'Egypt marked missing for Q36',s:'Queuer flagged a no show at field',m:9,station:'queueing'},
  {ic:'box',tone:'info',t:'Brazil requested a spare part',s:'RH238 \u00b7 pneumatics fitting',m:12,station:'spares'},
  {ic:'judging',tone:'bad',t:'Kenya judging session complete',s:'Priya Sharma submitted scores',m:18,station:'judging'},
  {ic:'check',tone:'ok',t:'Kenya passed inspection',s:'Cleared on recheck',m:24,station:'inspections'},
  {ic:'wrench',tone:'ok',t:'Turkey repair done',s:'RH233 \u00b7 bumper reattached',m:31,station:'hospital'}
 ];
-
+ 
 /* ---------- live UI state ---------- */
 const state={station:'dashboard',role:'Lead / Admin',user:null,inspFilter:'all',inspView:'board',inspQuery:'',hospPri:'all',hospQuery:'',emgFilter:'active',spareCat:'all',spareQuery:''};
-let selSpare=null;
-let editReqId=null;
 let intakeType='Mechanical';
-
+ 
 /* ---------- helpers ---------- */
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -232,25 +253,25 @@ function cdTone(ms){if(ms<=180000)return 't-crit';if(ms<=480000)return 't-warn';
 function toast(msg,accTxt){const t=$('toaster');const d=document.createElement('div');d.className='toast';d.innerHTML=icon('check')+'<span>'+esc(msg)+'</span>'+(accTxt?'<span class="t-acc">'+esc(accTxt)+'</span>':'');t.appendChild(d);setTimeout(function(){d.style.transition='opacity .3s,transform .3s';d.style.opacity='0';d.style.transform='translateY(8px)';setTimeout(function(){d.remove();},300);},2600);}
 function actor(){return state.user?state.user.name:'Volunteer';}
 function logActivity(o){o.m=0;ACTIVITY.unshift(o);if(ACTIVITY.length>24)ACTIVITY.pop();const an=$('act-n');if(an)an.textContent=ACTIVITY.length;}
-
+ 
 const TONE={ok:['var(--ok-tint)','var(--ok)'],hot:['var(--hot-tint)','var(--hot)'],info:['var(--info-tint)','var(--info)'],bad:['var(--bad-tint)','var(--bad)'],warn:['var(--warn-tint)','var(--warn)'],mut:['var(--surface-3)','var(--text-2)'],acc:['var(--accent-tint)','var(--accent-deep)']};
-
+ 
 /* ---------- access ---------- */
 function access(){return ROLE_ACCESS[state.role]||{edit:[],viewJudge:false};}
 function canEdit(st){return access().edit.indexOf(st)>=0;}
 function requireEdit(st){if(canEdit(st))return true;toast('View only \u00b7 '+(STATIONS[st]?STATIONS[st].name:st)+' is handled by another role');return false;}
-
+ 
 /* ---------- badges ---------- */
 function overallBadge(s){const m={'Passed':'bg-ok','In progress':'bg-warn','Not started':'bg-mut','Reinspection':'bg-bad'};return '<span class="badge '+(m[s]||'bg-mut')+'"><span class="b-dot"></span>'+s+'</span>';}
 function priBadge(p){const m={high:['bg-bad','High'],normal:['bg-warn','Normal'],low:['bg-info','Low']};const x=m[p]||m.normal;return '<span class="badge '+x[0]+'"><span class="b-dot"></span>'+x[1]+'</span>';}
 function ticketBadge(st){const m={'Waiting':'bg-mut','In progress':'bg-warn','Done':'bg-ok'};return '<span class="badge '+(m[st]||'bg-mut')+'"><span class="b-dot"></span>'+st+'</span>';}
 function typeBadge(tp){if(!tp)return '';return '<span class="badge bg-acc"><span class="b-dot"></span>'+esc(tp)+'</span>';}
 function emgBadge(st){const m={'On it':'bg-warn','Waiting':'bg-bad','Resolved':'bg-ok','Will not make match':'bg-mut'};return '<span class="badge '+(m[st]||'bg-mut')+'"><span class="b-dot"></span>'+st+'</span>';}
-function qBadge(s){const m={'Not queued':'bg-mut','Queued':'bg-info','On deck':'bg-warn','At field':'bg-acc','Present':'bg-ok','Missing':'bg-bad'};return '<span class="badge '+(m[s]||'bg-mut')+'"><span class="b-dot"></span>'+s+'</span>';}
+function qBadge(s){const m={'Not queued':'bg-mut','Queued':'bg-info','Missing':'bg-bad'};return '<span class="badge '+(m[s]||'bg-mut')+'"><span class="b-dot"></span>'+s+'</span>';}
 function checklistBar(items){return '<div class="checklist">'+items.map(function(x){return '<span class="chk '+(x==='pass'?'pass':x==='fail'?'fail':'pend')+'"></span>';}).join('')+'</div>';}
-
+ 
 /* ---------- navigation ---------- */
-const CORE=['dashboard','inspections','hospital','spares','emergency','queueing','judging'];
+const CORE=['dashboard','inspections','hospital','spares','queueing','judging'];
 const LOCK_SVG='<svg class="ni-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 function buildNav(){
  const a=access();
@@ -266,7 +287,7 @@ function buildNav(){
  updateNavCounts();setActiveNav(state.station);
 }
 function updateNavCounts(){
- const c={inspections:TEAMS.filter(function(t){return t.overall!=='Passed';}).length,hospital:TICKETS.filter(function(t){return t.st!=='Done';}).length,spares:SPARE_REQUESTS.length,emergency:EMERGENCIES.filter(function(e){return e.st!=='Resolved'&&e.st!=='Will not make match';}).length,queueing:MATCHES.filter(function(m){return !m.played;}).length};
+ const c={inspections:TEAMS.filter(function(t){return t.overall!=='Passed';}).length,hospital:TICKETS.filter(function(t){return t.st!=='Done';}).length,spares:SPARES.filter(function(p){return p.inv<=0;}).length,queueing:MATCHES.filter(function(m){return !m.played;}).length};
  document.querySelectorAll('[data-count]').forEach(function(el){const k=el.getAttribute('data-count');el.textContent=(c[k]!=null?c[k]:'');});
 }
 function setActiveNav(station){document.querySelectorAll('.nav-item,.bn-item').forEach(function(el){el.classList.toggle('active',el.getAttribute('data-go')===station);});}
@@ -278,12 +299,12 @@ function go(station){
  closeDrawer();closeSearch();closeUserMenu();
  render(station);window.scrollTo(0,0);
 }
-function render(station){({dashboard:renderDashboard,inspections:renderInspections,hospital:renderHospital,spares:renderSpares,emergency:renderEmergency,queueing:renderQueue,judging:renderJudging}[station]||function(){})();}
-
+function render(station){({dashboard:renderDashboard,inspections:renderInspections,hospital:renderHospital,spares:renderSpares,queueing:renderQueue,judging:renderJudging}[station]||function(){})();}
+ 
 /* ---------- KPI + page-head helpers ---------- */
 function kpi(n,l,tone){return '<div class="kpi'+(tone?' tone-'+tone:'')+'"><div class="k-n">'+n+'</div><div class="k-l">'+l+'</div></div>';}
 function phead(station,title,sub,kpis){const s=STATIONS[station];return '<div class="phead"><div><div class="eyebrow"><span class="eb-dot"></span>'+s.name+'</div><h1 class="ptitle">'+title+'</h1><p class="psub">'+sub+'</p></div><div class="kpis">'+kpis+'</div></div>';}
-
+ 
 /* ================= DASHBOARD ================= */
 function statCard(k,big,bigsm,metas,locked){
  const s=STATIONS[k];
@@ -299,35 +320,33 @@ function renderDashboard(){
  const openT=TICKETS.filter(function(t){return t.st!=='Done';}).length;
  const highT=TICKETS.filter(function(t){return t.pri==='high'&&t.st!=='Done';}).length;
  const hospInprog=TICKETS.filter(function(t){return t.st==='In progress';}).length;
- const spareReqs=SPARE_REQUESTS.length;
  const spareLow=SPARES.filter(function(p){return p.inv<=0;}).length;
- const fsActive=EMERGENCIES.filter(function(e){return e.st!=='Resolved'&&e.st!=='Will not make match';}).length;
- const fsWaiting=EMERGENCIES.filter(function(e){return e.st==='Waiting';}).length;
+ const matchCrit=TICKETS.filter(function(t){return t.matchAt&&t.st!=='Done'&&(t.matchAt-Date.now())<=10*MIN;}).length;
+ const inProgMatch=TICKETS.filter(function(t){return t.matchAt&&t.st!=='Done';}).length;
  const upcoming=MATCHES.filter(function(m){return !m.played;}).length;
  const missing=Object.keys(queueState).filter(function(k){return queueState[k]==='Missing';}).length;
  const a=access();
  const hello=state.user?('Welcome, '+esc(state.user.name)):'Operations overview';
-
- let html=phead('dashboard',hello,'Live status across inspections, the Robot Hospital, Flying Squad, queueing and judging \u00b7 Incheon, day 2 qualifications.',
-   kpi(total,'Teams','acc')+kpi(passed,'Inspection passed','ok')+kpi(openT,'In hospital','warn')+kpi(fsActive,'Flying Squad','hot')+kpi(missing,'Missing now','bad'));
-
+ 
+ let html=phead('dashboard',hello,'Live status across inspections, the Robot Hospital, spare parts, queueing and judging \u00b7 Incheon, day 2 qualifications.',
+   kpi(total,'Teams','acc')+kpi(passed,'Inspection passed','ok')+kpi(openT,'In hospital','warn')+kpi(matchCrit,'Match critical',matchCrit?'bad':'ok')+kpi(missing,'Missing now','bad'));
+ 
  html+='<div class="stationgrid">';
  html+=statCard('inspections',passed,'/ '+total+' passed','<span class="badge bg-warn"><span class="b-dot"></span>'+inProg+' in progress</span><span class="badge bg-mut"><span class="b-dot"></span>'+notStarted+' to go</span>');
- html+=statCard('hospital',openT,'open tickets','<span class="badge bg-bad"><span class="b-dot"></span>'+highT+' high</span><span class="badge bg-info"><span class="b-dot"></span>'+hospInprog+' in progress</span>');
- html+=statCard('spares',spareReqs,'requests','<span class="badge bg-mut"><span class="b-dot"></span>'+SPARES.length+' parts</span>'+(spareLow?'<span class="badge bg-bad"><span class="b-dot"></span>'+spareLow+' out</span>':'<span class="badge bg-mut"><span class="b-dot"></span>'+kitsOpen+' kits open</span>'));
- html+=statCard('emergency',fsActive,'active now','<span class="badge bg-bad"><span class="b-dot"></span>'+fsWaiting+' unassigned</span><span class="badge bg-hot"><span class="b-dot"></span>match critical</span>');
+ html+=statCard('hospital',openT,'open tickets','<span class="badge bg-bad"><span class="b-dot"></span>'+highT+' high</span>'+(matchCrit?'<span class="badge bg-hot"><span class="b-dot"></span>'+matchCrit+' match critical</span>':'<span class="badge bg-info"><span class="b-dot"></span>'+hospInprog+' in progress</span>'));
+ html+=statCard('spares',spareLow,'out of stock','<span class="badge bg-mut"><span class="b-dot"></span>'+SPARES.length+' parts</span><span class="badge bg-mut"><span class="b-dot"></span>'+kitsOpen+' kits open</span>');
  html+=statCard('queueing',upcoming,'matches up','<span class="badge '+(missing?'bg-bad':'bg-ok')+'"><span class="b-dot"></span>'+missing+' missing</span><span class="badge bg-mut"><span class="b-dot"></span>5 tables</span>');
  html+=statCard('judging',JUDGE_TEAMS.length,'on slate','<span class="badge bg-mut"><span class="b-dot"></span>3 judges</span>'+(a.viewJudge?'':'<span class="badge bg-mut"><span class="b-dot"></span>restricted</span>'),!a.viewJudge);
  html+='</div>';
-
+ 
  html+='<div class="dash-grid">';
  // activity
  html+='<div class="span-8"><div class="panel"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('info')+'</span><div><h3>Live activity</h3><div class="ph-sub">Across all stations</div></div><div class="ph-act"><button class="link-arrow" data-action="activity-open">View all '+icon('arrow')+'</button></div></div><div class="feed">'+ACTIVITY.slice(0,7).map(feedRow).join('')+'</div></div></div>';
- // flying squad ticker
- const eactive=EMERGENCIES.filter(function(e){return e.st!=='Resolved'&&e.st!=='Will not make match';}).sort(function(x,y){return x.at-y.at;});
- let tick=eactive.map(function(e){const ms=e.at-Date.now();const crit=cdTone(ms)==='t-crit';return '<div class="ticker-row'+(crit?' urgent':'')+'" data-action="open-emg" data-id="'+e.id+'"><span class="tk-clock" data-countdown="'+e.at+'">'+fmtCD(ms)+'</span><div class="tk-mid"><div class="tk-team">'+flag(e.code,'sm')+esc(e.team)+'</div><div class="tk-iss">'+esc(e.iss)+'</div></div></div>';}).join('');
- if(!tick)tick='<div class="empty" style="padding:30px 10px"><div class="e-t">All clear</div><div>No match critical issues</div></div>';
- html+='<div class="span-4"><div class="panel"><div class="panel-h"><span class="ph-ic" style="background:var(--hot)">'+icon('emergency')+'</span><div><h3>Flying Squad</h3><div class="ph-sub">Match critical countdowns</div></div></div><div class="ticker">'+tick+'</div></div></div>';
+ // in-shop teams and their next match
+ const eactive=TICKETS.filter(function(t){return t.matchAt&&t.st!=='Done';}).sort(function(x,y){return x.matchAt-y.matchAt;});
+ let tick=eactive.map(function(t){const ms=t.matchAt-Date.now();const crit=cdTone(ms)==='t-crit';return '<div class="ticker-row'+(crit?' urgent':'')+'" data-action="open-ticket" data-id="'+t.id+'"><span class="tk-clock" data-countdown="'+t.matchAt+'">'+fmtCD(ms)+'</span><div class="tk-mid"><div class="tk-team">'+flag(t.code,'sm')+esc(t.team)+' <span style="color:var(--text-3);font-weight:500">'+(t.match||'')+'</span></div><div class="tk-iss">'+esc(t.iss)+'</div></div></div>';}).join('');
+ if(!tick)tick='<div class="empty" style="padding:30px 10px"><div class="e-t">All clear</div><div>No teams waiting on a match</div></div>';
+ html+='<div class="span-4"><div class="panel"><div class="panel-h"><span class="ph-ic" style="background:#2c6e6a">'+icon('emergency')+'</span><div><h3>In the shop</h3><div class="ph-sub">Next match countdowns</div></div></div><div class="ticker">'+tick+'</div></div></div>';
  // inspections at a glance
  const segs=[['Passed',passed,'var(--ok)'],['In progress',inProg,'var(--warn)'],['Reinspection',reins,'var(--bad)'],['Not started',notStarted,'var(--text-3)']];
  let bars=segs.map(function(s){const pct=Math.round(s[1]/total*100);return '<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span style="font-weight:500">'+s[0]+'</span><span class="mono" style="color:var(--text-3)">'+s[1]+' &middot; '+pct+'%</span></div><div style="height:8px;border-radius:5px;background:var(--surface-3);overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+s[2]+';border-radius:5px"></div></div></div>';}).join('');
@@ -339,7 +358,7 @@ function renderDashboard(){
  html+='</div>';
  $('view-dashboard').innerHTML=html;
 }
-
+ 
 /* ================= INSPECTIONS ================= */
 const INSP_FILTERS=['all','Passed','In progress','Not started','Reinspection'];
 function inspFiltered(){
@@ -347,6 +366,7 @@ function inspFiltered(){
  if(state.inspFilter!=='all')list=list.filter(function(t){return t.overall===state.inspFilter;});
  const q=state.inspQuery.trim().toLowerCase();
  if(q)list=list.filter(function(t){return t.country.toLowerCase().indexOf(q)>=0||t.code.indexOf(q)>=0||String(t.id).indexOf(q)>=0||t.pit.toLowerCase().indexOf(q)>=0;});
+ list.sort(function(a,b){return a.country.localeCompare(b.country);});
  return list;
 }
 function tcard(t){return '<div class="tcard" data-action="open-team" data-code="'+t.code+'"><div class="tcard-top">'+flag(t.code,'lg')+'<div class="tcard-id"><div class="tcard-country">'+esc(t.country)+'</div><div class="tcard-meta">#'+t.id+' &middot; '+esc(t.pit)+'</div></div></div>'+checklistBar(t.items)+'<div class="tcard-foot">'+overallBadge(t.overall)+'<span class="tcard-insp">'+(t.inspector?'by '+esc(t.inspector.split(' ')[0]):'unassigned')+'</span></div></div>';}
@@ -369,7 +389,7 @@ function renderInspections(){
  $('view-inspections').innerHTML=html;
  paintInspList();
 }
-
+ 
 /* ================= ROBOT HOSPITAL ================= */
 const HOSP_COLS=[['Waiting','#8b94a3'],['In progress','#2c6e6a'],['Done','#3f7d57']];
 function hospFiltered(){
@@ -379,7 +399,7 @@ function hospFiltered(){
  if(q)list=list.filter(function(t){return t.team.toLowerCase().indexOf(q)>=0||t.iss.toLowerCase().indexOf(q)>=0||t.id.toLowerCase().indexOf(q)>=0;});
  return list;
 }
-function ticketCard(t){return '<div class="ticket p-'+t.pri+'" data-action="open-ticket" data-id="'+t.id+'"><div class="ticket-top"><span class="ticket-id">'+t.id+'</span>'+priBadge(t.pri)+(t.type?typeBadge(t.type):'')+'</div><div class="ticket-iss"><div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">'+flag(t.code,'sm')+'<b style="font-weight:600">'+esc(t.team)+'</b></div>'+esc(t.iss)+'</div><div class="ticket-foot"><span class="ticket-tech">'+(t.tech?miniAv(t.tech)+esc(t.tech.split(' ')[0]):'<span style="color:var(--text-3)">Unassigned</span>')+'</span><span class="ticket-age">'+fmtAge(t.open)+'</span></div></div>';}
+function ticketCard(t){var cd='';if(t.matchAt&&t.st!=='Done'){var ms=t.matchAt-Date.now();cd='<div class="ticket-cd '+cdTone(ms)+'">'+icon('clock')+'<span class="tc-q">'+(t.match||'next')+'</span><span class="tc-t" data-countdown="'+t.matchAt+'">'+fmtCD(ms)+'</span></div>';}return '<div class="ticket p-'+t.pri+'" data-action="open-ticket" data-id="'+t.id+'"><div class="ticket-top"><span class="ticket-id">'+t.id+'</span>'+priBadge(t.pri)+(t.type?typeBadge(t.type):'')+'</div><div class="ticket-iss"><div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">'+flag(t.code,'sm')+'<b style="font-weight:600">'+esc(t.team)+'</b></div>'+esc(t.iss)+'</div>'+cd+'<div class="ticket-foot"><span class="ticket-tech">'+(t.tech?miniAv(t.tech)+esc(t.tech.split(' ')[0]):'<span style="color:var(--text-3)">Unassigned</span>')+'</span><span class="ticket-age">'+fmtAge(t.open)+'</span></div></div>';}
 function paintHospBoard(){
  const list=hospFiltered();const box=$('hosp-board');if(!box)return;
  box.innerHTML=HOSP_COLS.map(function(col){const items=list.filter(function(t){return t.st===col[0];});return '<div class="kcol"><div class="kcol-h"><span class="kc-sw" style="background:'+col[1]+'"></span><span class="kc-name">'+col[0]+'</span><span class="kc-n">'+items.length+'</span></div><div class="kcards">'+(items.length?items.map(ticketCard).join(''):'<div style="padding:14px 6px;text-align:center;color:var(--text-3);font-size:12px">None</div>')+'</div></div>';}).join('');
@@ -388,106 +408,75 @@ function renderHospital(){
  const open=TICKETS.filter(function(t){return t.st!=='Done';}).length;
  const high=TICKETS.filter(function(t){return t.pri==='high'&&t.st!=='Done';}).length;
  const inprog=TICKETS.filter(function(t){return t.st==='In progress';}).length;
+ const crit=TICKETS.filter(function(t){return t.matchAt&&t.st!=='Done'&&(t.matchAt-Date.now())<=10*MIN;}).length;
  const done=TICKETS.filter(function(t){return t.st==='Done';}).length;
  const pf=[['all','All'],['high','High'],['normal','Normal'],['low','Low']];
  let chips=pf.map(function(p){const n=p[0]==='all'?TICKETS.length:TICKETS.filter(function(t){return t.pri===p[0];}).length;return '<button class="chip'+(state.hospPri===p[0]?' on':'')+'" data-action="hosp-filter" data-f="'+p[0]+'">'+p[1]+'<span class="c-n">'+n+'</span></button>';}).join('');
  const ed=canEdit('hospital');
- let html=phead('hospital','Robot Hospital','Repair tickets for teams pulled from competition. Log a team you are helping, claim a ticket, and promote anything match critical to the Flying Squad.',
-   kpi(open,'Open','warn')+kpi(high,'High priority','bad')+kpi(inprog,'In progress','info')+kpi(done,'Done','ok'));
- html+='<div class="toolbar"><div class="chips">'+chips+'</div>'+(ed?'<button class="btn primary" data-action="hosp-new">'+icon('plus')+'Log help</button>':'')+'<div class="tb-search">'+icon('search')+'<input id="hosp-search" type="text" placeholder="Search ticket, team\u2026" value="'+esc(state.hospQuery)+'"></div></div>';
+ let html=phead('hospital','Robot Hospital','Helping teams get back on the field. Log a team you are helping, claim a ticket, and watch the countdown to each team\u2019s next match.',
+   kpi(open,'Open','warn')+kpi(high,'High priority','bad')+kpi(crit,'Match critical',crit?'bad':'ok')+kpi(done,'Done','ok'));
+ html+='<div class="toolbar"><div class="chips">'+chips+'</div>'+(ed?'<button class="btn primary" data-action="hosp-new">'+icon('plus')+'Log help</button>':'')+'<button class="btn" data-action="hosp-display">'+icon('maximize')+'Match board</button><div class="tb-search">'+icon('search')+'<input id="hosp-search" type="text" placeholder="Search ticket, team\u2026" value="'+esc(state.hospQuery)+'"></div></div>';
  html+='<div class="kanban" id="hosp-board"></div>';
  $('view-hospital').innerHTML=html;
  paintHospBoard();
 }
-
-/* ================= FLYING SQUAD ================= */
-function renderEmergency(){
- const active=EMERGENCIES.filter(function(e){return e.st!=='Resolved'&&e.st!=='Will not make match';}).length;
- const waiting=EMERGENCIES.filter(function(e){return e.st==='Waiting';}).length;
- const resolved=EMERGENCIES.filter(function(e){return e.st==='Resolved';}).length;
- const filters=[['active','Active'],['Waiting','Unassigned'],['Resolved','Resolved'],['all','All']];
- let chips=filters.map(function(f){const n=f[0]==='active'?active:(f[0]==='all'?EMERGENCIES.length:EMERGENCIES.filter(function(e){return e.st===f[0];}).length);return '<button class="chip'+(state.emgFilter===f[0]?' on':'')+'" data-action="emg-filter" data-f="'+f[0]+'">'+f[1]+'<span class="c-n">'+n+'</span></button>';}).join('');
- let list=EMERGENCIES.slice();
- if(state.emgFilter==='active')list=list.filter(function(e){return e.st!=='Resolved'&&e.st!=='Will not make match';});
- else if(state.emgFilter!=='all')list=list.filter(function(e){return e.st===state.emgFilter;});
- list.sort(function(a,b){return a.at-b.at;});
- const ed=canEdit('emergency');
- let cards=list.map(function(e){
-   const ms=e.at-Date.now();const done=(e.st==='Resolved'||e.st==='Will not make match');const tone=done?'':cdTone(ms);const tm=teamByCode(e.code);
-   const cd=done?'<div class="ecard-cd" style="color:var(--text-3);font-size:22px">'+(e.st==='Resolved'?'DONE':'\u00b7')+'</div>':'<div class="ecard-cd" data-countdown="'+e.at+'">'+fmtCD(ms)+'</div>';
-   let acts;
-   if(ed){acts='<div class="ecard-actions"><button class="btn sm" data-action="open-emg" data-id="'+e.id+'">Manage</button>'+((e.tech||done)?'':'<button class="btn sm primary" data-action="assign-emg" data-id="'+e.id+'">Assign to me</button>')+(done?'':'<button class="btn sm" data-action="set-emg-state" data-id="'+e.id+'" data-st="Resolved">Resolve</button>')+'</div>';}
-   else{acts='<div class="ecard-actions"><button class="btn sm" data-action="open-emg" data-id="'+e.id+'">Details</button></div>';}
-   return '<div class="ecard '+tone+'"'+(done?' data-resolved="1"':'')+'><div class="ecard-band"></div><div class="ecard-body"><div class="ecard-top">'+cd+'<div class="ecard-match"><div class="em-q">'+e.q+'</div><div class="em-l">'+clockHM(e.at)+'</div></div></div><div class="ecard-team">'+flag(e.code,'lg')+'<div><div class="et-name">'+esc(e.team)+'</div><div class="et-loc">'+(tm?esc(tm.pit):'')+'</div></div></div><div class="ecard-iss">'+esc(e.iss)+'</div><div style="display:flex;align-items:center;gap:9px;margin-bottom:13px">'+emgBadge(e.st)+(e.tech?'<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)">'+miniAv(e.tech)+esc(e.tech.split(' ')[0])+'</span>':'<span style="font-size:12px;color:var(--text-3)">Unassigned</span>')+'</div>'+acts+'</div></div>';
- }).join('');
- if(!cards)cards='<div class="empty">'+icon('check')+'<div class="e-t">All clear</div><div>No issues in this view.</div></div>';
- let html=phead('emergency','Flying Squad','Rapid response repairs for robots that won\u2019t make their match. Countdowns run to match start \u00b7 work the reddest cards first.',
-   kpi(active,'Active','hot')+kpi(waiting,'Unassigned','bad')+kpi(resolved,'Resolved','ok')+kpi(MATCHES.filter(function(m){return !m.played;}).length,'Matches up','acc'));
- html+='<div class="toolbar"><div class="chips">'+chips+'</div><button class="btn" data-action="emg-display" style="margin-left:auto">'+icon('maximize')+'Display mode</button></div>';
- html+='<div class="ezone">'+cards+'</div>';
- $('view-emergency').innerHTML=html;
-}
-function assignEmg(id){if(!requireEdit('emergency'))return;const e=EMERGENCIES.find(function(x){return x.id===id;});if(!e)return;e.tech=actor();if(e.st==='Waiting')e.st='On it';toast('Assigned to you',e.q);renderEmergency();openEmg(id);}
-function setEmgState(id,st){if(!requireEdit('emergency'))return;const e=EMERGENCIES.find(function(x){return x.id===id;});if(!e)return;e.st=st;toast('Updated',st);if(st==='Resolved')logActivity({ic:'check',tone:'ok',t:esc(e.team)+' resolved by Flying Squad',s:e.q,station:'emergency'});renderEmergency();openEmg(id);updateNavCounts();}
-function openEmg(id){
- const e=EMERGENCIES.find(function(x){return x.id===id;});if(!e)return;const ed=canEdit('emergency');const ms=e.at-Date.now();const tm=teamByCode(e.code);
- let actions='';
- if(ed){let assign=e.tech?'':'<button class="btn sm primary" data-action="assign-emg" data-id="'+id+'">'+icon('user')+'Assign to me</button>';let sb='';[['On it','On it'],['Resolved','Resolved'],['Will not make match','Won\u2019t make match']].forEach(function(s){if(e.st!==s[0])sb+='<button class="btn sm" data-action="set-emg-state" data-id="'+id+'" data-st="'+s[0]+'">'+s[1]+'</button>';});actions='<div class="dsec"><div class="dsec-t">Actions</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+assign+sb+'</div></div>';}
- const cd=e.st==='Resolved'?'':'<span class="mono" style="font-weight:600;color:'+(ms<=180000?'var(--hot)':'var(--text)')+'">'+fmtCD(ms)+' to match</span>';
- const body='<div class="dsec"><div style="display:flex;align-items:center;gap:12px;margin-bottom:9px">'+flag(e.code,'lg')+'<div><div style="font-weight:600;font-size:16px">'+esc(e.team)+'</div><div class="mono" style="color:var(--text-3);font-size:12px">'+e.q+(tm?' &middot; '+esc(tm.pit):'')+'</div></div></div><div style="display:flex;align-items:center;gap:10px">'+emgBadge(e.st)+cd+'</div></div><div class="dsec"><div class="dsec-t">Issue</div><div style="font-size:14px">'+esc(e.iss)+'</div></div><div class="dsec"><div class="dsec-t">Technician</div>'+(e.tech?'<div style="display:flex;align-items:center;gap:9px">'+miniAv(e.tech)+'<span style="font-weight:500">'+esc(e.tech)+'</span></div>':'<span style="color:var(--text-3)">Unassigned</span>')+'</div>'+actions;
- openDrawer('Flying Squad',body,'');
-}
+ 
+/* ================= MATCH BOARD (big screen) ================= */
 function openDisplay(){
- const list=EMERGENCIES.filter(function(e){return e.st!=='Resolved'&&e.st!=='Will not make match';}).sort(function(a,b){return a.at-b.at;});
- let cards=list.map(function(e){const ms=e.at-Date.now();return '<div class="dcard '+cdTone(ms)+'"><div class="dcard-cd" data-countdown="'+e.at+'">'+fmtCD(ms)+'</div><div class="dcard-team">'+flag(e.code,'lg')+'<span class="dt-n">'+esc(e.team)+'</span><span class="dcard-q">'+e.q+'</span></div><div class="dcard-iss">'+esc(e.iss)+'</div><div class="dcard-st">'+emgBadge(e.st)+(e.tech?' &nbsp; '+esc(e.tech):'')+'</div></div>';}).join('');
- if(!cards)cards='<div style="color:#8a94a6;font-size:18px;padding:40px">No active match critical issues.</div>';
- $('display').innerHTML='<div class="disp-head"><div class="dh-l"><span class="ph-ic" style="background:var(--hot);width:42px;height:42px;border-radius:12px">'+icon('emergency')+'</span><div class="disp-title">Flying Squad<small>Match critical board &middot; FGC 2026 Incheon</small></div></div><div style="display:flex;align-items:center;gap:18px"><span class="disp-clock" id="disp-clock">'+clockHM(Date.now())+'</span><button class="btn-x-disp" data-action="display-close">'+icon('x')+'Exit</button></div></div><div class="disp-grid">'+cards+'</div>';
+ var list=TICKETS.filter(function(t){return t.matchAt&&t.st!=='Done';}).sort(function(a,b){return a.matchAt-b.matchAt;});
+ var cards=list.map(function(t){var ms=t.matchAt-Date.now();var tm=teamByCode(t.code);return '<div class="dcard '+cdTone(ms)+'"><div class="dcard-cd" data-countdown="'+t.matchAt+'">'+fmtCD(ms)+'</div><div class="dcard-team">'+flag(t.code,'lg')+'<span class="dt-n">'+esc(t.team)+'</span><span class="dcard-q">'+(t.match||'')+'</span></div><div class="dcard-iss">'+esc(t.iss)+'</div><div class="dcard-st">'+ticketBadge(t.st)+(t.tech?' &nbsp; '+esc(t.tech):'')+'</div></div>';}).join('');
+ if(!cards)cards='<div style="color:#8a94a6;font-size:18px;padding:40px">No teams with an upcoming match.</div>';
+ $('display').innerHTML='<div class="disp-head"><div class="dh-l"><span class="ph-ic" style="background:#2c6e6a;width:42px;height:42px;border-radius:12px">'+icon('emergency')+'</span><div class="disp-title">Robot Hospital \u00b7 match board<small>Teams in the shop and their next match \u00b7 FGC 2026 Incheon</small></div></div><div style="display:flex;align-items:center;gap:18px"><span class="disp-clock" id="disp-clock">'+clockHM(Date.now())+'</span><button class="btn-x-disp" data-action="display-close">'+icon('x')+'Exit</button></div></div><div class="disp-grid">'+cards+'</div>';
  $('display').classList.add('on');
 }
 function closeDisplay(){$('display').classList.remove('on');}
-
+ 
 /* ================= QUEUEING ================= */
 function renderQueue(){
  const up=MATCHES.filter(function(m){return !m.played;}).sort(function(a,b){return a.at-b.at;});
- const atField=Object.keys(queueState).filter(function(k){return queueState[k]==='At field'||queueState[k]==='Present';}).length;
+ const queued=Object.keys(queueState).filter(function(k){return queueState[k]==='Queued';}).length;
  const missing=Object.keys(queueState).filter(function(k){return queueState[k]==='Missing';}).length;
- const onDeck=Object.keys(queueState).filter(function(k){return queueState[k]==='On deck';}).length;
+ const notq=Object.keys(queueState).filter(function(k){return queueState[k]==='Not queued';}).length;
  const ed=canEdit('queueing');
  let html=phead('queueing','Match queueing','Stage each alliance and get robots to the field on time. Every match shows its Blue and Red alliance and table \u00b7 Table 5 is the main field.',
-   kpi(up.length,'Matches up','acc')+kpi(onDeck,'On deck','warn')+kpi(atField,'At field','ok')+kpi(missing,'Missing','bad'));
+   kpi(up.length,'Matches up','acc')+kpi(queued,'Queued','ok')+kpi(notq,'Not queued','warn')+kpi(missing,'Missing','bad'));
  function col(codes,cls,label,m){return '<div class="qalliance '+cls+'"><div class="qa-label"><span class="qa-sw"></span>'+label+'</div>'+codes.map(function(code){const tm=teamByCode(code);const st=queueState[m.q+'_'+code];return '<div class="qteam '+(st==='Missing'?'q-missing':'')+'">'+flag(code)+'<span class="qteam-name">'+esc(tm?tm.country:code)+'</span><span class="qstate" '+(ed?'data-action="q-advance" data-q="'+m.q+'" data-code="'+code+'"':'')+'>'+qBadge(st)+'</span></div>';}).join('')+'</div>';}
  html+=up.map(function(m){const ms=m.at-Date.now();const main=m.table===5;return '<div class="qmatch"><div class="qmatch-h"><span class="qmatch-q">'+m.q+'</span><span class="qmatch-time">'+clockHM(m.at)+'</span><span class="tbl-chip '+(main?'main':'')+'">'+icon('monitor')+'Table '+m.table+(main?' &middot; Main field':'')+'</span><div class="qmatch-cd">'+icon('clock')+'<span class="qcd-n" data-countdown="'+m.at+'">'+fmtCD(ms)+'</span></div></div><div class="qrow">'+col(m.A,'qa-blue','Blue Alliance',m)+col(m.B,'qa-red','Red Alliance',m)+'</div></div>';}).join('');
- if(ed)html+='<p style="color:var(--text-3);font-size:12px;margin-top:2px">Tap a team\u2019s status to advance it: Not queued \u2192 Queued \u2192 On deck \u2192 At field \u2192 Present \u2192 Missing.</p>';
+ if(ed)html+='<p style="color:var(--text-3);font-size:12px;margin-top:2px">Tap a team\u2019s status to advance it: Not queued \u2192 Queued \u2192 Missing.</p>';
  $('view-queueing').innerHTML=html;
 }
 function advanceQ(q,code){if(!requireEdit('queueing'))return;const key=q+'_'+code;const idx=QSTATES.indexOf(queueState[key]);const next=QSTATES[(idx+1)%QSTATES.length];queueState[key]=next;const tm=teamByCode(code);toast((tm?tm.country:code)+' \u2192 '+next);if(next==='Missing')logActivity({ic:'flag',tone:'bad',t:esc(tm?tm.country:code)+' marked missing',s:q,station:'queueing'});renderQueue();}
-
+ 
 /* ================= JUDGING ================= */
 function judgeRows(){return JUDGE_TEAMS.map(function(r){return {r:r,total:r.scores.reduce(function(a,b){return a+b;},0)};}).sort(function(a,b){return b.total-a.total;});}
-function scorePill(code,ci,v,ed){const cls=v>=4?'s-hi':(v>=3?'s-mid':'s-lo');return '<span class="score-pill '+cls+'" '+(ed?'data-action="j-score" data-code="'+code+'" data-ci="'+ci+'"':'')+'>'+v.toFixed(1)+'</span>';}
+function fmtScore(v){v=Math.round(v*2)/2;return v%1===0?v.toFixed(0):v.toFixed(1);}
+function scorePill(code,ci,v){const cls=v>=8?'s-hi':(v>=6?'s-mid':'s-lo');return '<span class="score-pill '+cls+'">'+fmtScore(v)+'</span>';}
 function renderJudging(){
  const a=access();
  if(!a.viewJudge){$('view-judging').innerHTML='<div class="lockwrap"><div><div class="lock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><h1 class="ptitle">Judging is restricted</h1><p class="psub" style="margin:9px auto 0;max-width:46ch">This area is for judges and the volunteer lead only. Sign in as Chucks (Judge) or Caitlin (Admin) to view scoring.</p></div></div>';return;}
- const ed=canEdit('judging');const rows=judgeRows();
+ const ed=canEdit('judging');const rows=judgeRows();const maxTotal=JCRIT.length*JMAX;
  const avg=(rows.reduce(function(s,x){return s+x.total;},0)/rows.length).toFixed(1);
  const top=rows[0];const topName=teamByCode(top.r.code);
  let head='<tr><th class="lft">#</th><th class="lft">Team</th>'+JCRIT.map(function(c){return '<th>'+c+'</th>';}).join('')+'<th>Total</th><th class="lft">Judge</th></tr>';
- let body=rows.map(function(x,idx){const r=x.r;const tm=teamByCode(r.code);return '<tr><td class="lft"><span class="rank-badge '+(idx===0?'r1':'')+'">'+(idx+1)+'</span></td><td class="lft"><div class="cell-team-j" data-action="open-judge" data-code="'+r.code+'">'+flag(r.code)+esc(tm?tm.country:r.code)+'</div></td>'+r.scores.map(function(v,ci){return '<td>'+scorePill(r.code,ci,v,ed)+'</td>';}).join('')+'<td class="jtotal">'+x.total.toFixed(1)+'</td><td class="lft"><div style="display:flex;align-items:center;gap:7px">'+miniAv(r.judge)+esc(r.judge.split(' ')[0])+'</div></td></tr>';}).join('');
- let html=phead('judging','Judging panel','Working tally across the FGC rubric. '+(ed?'Tap any score to adjust it (1.0 to 5.0).':'Read-only \u00b7 scoring is entered by the assigned judge.'),
-   kpi(rows.length,'Teams scored','acc')+kpi(avg,'Avg total','warn')+kpi(topName?topName.country:top.r.code,'Leading','ok'));
+ let body=rows.map(function(x,idx){const r=x.r;const tm=teamByCode(r.code);return '<tr data-action="open-judge" data-code="'+r.code+'" style="cursor:pointer"><td class="lft"><span class="rank-badge '+(idx===0?'r1':'')+'">'+(idx+1)+'</span></td><td class="lft"><div class="cell-team-j">'+flag(r.code)+esc(tm?tm.country:r.code)+(r.note?' <span title="Has comments" style="color:var(--accent);display:inline-flex">'+icon('info')+'</span>':'')+(r.awards&&r.awards.length?' <span title="'+r.awards.length+' award'+(r.awards.length>1?'s':'')+' considered" style="color:#b3892a;display:inline-flex">'+icon('award')+'</span>':'')+'</div></td>'+r.scores.map(function(v,ci){return '<td>'+scorePill(r.code,ci,v)+'</td>';}).join('')+'<td class="jtotal">'+fmtScore(x.total)+' <span style="color:var(--text-3);font-weight:500;font-size:11px">/ '+maxTotal+'</span></td><td class="lft"><div style="display:flex;align-items:center;gap:7px">'+miniAv(r.judge)+esc(r.judge.split(' ')[0])+'</div></td></tr>';}).join('');
+ let html=phead('judging','Judging panel','Working tally across the FGC rubric, each criterion scored out of '+JMAX+'. '+(ed?'Open a team to grade with the sliders and add comments.':'Read-only \u00b7 scoring is entered by the assigned judge.'),
+   kpi(rows.length,'Teams scored','acc')+kpi(avg+' / '+maxTotal,'Avg total','warn')+kpi(topName?topName.country:top.r.code,'Leading','ok'));
  html+='<div class="jhead-note">'+icon('info')+'<div>Scores are confidential to the judging panel. Award decisions are finalised in deliberation \u00b7 these figures are a working tally, not final results.</div></div>';
  html+='<div style="overflow-x:auto"><table class="jtable"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>';
  $('view-judging').innerHTML=html;
 }
-function cycleScore(code,ci){if(!requireEdit('judging'))return;const r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return;let v=r.scores[ci]+0.5;if(v>5)v=1;r.scores[ci]=v;renderJudging();}
+function jSet(code,ci,v){if(!requireEdit('judging'))return;const r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return;r.scores[ci]=v;const lab=$('jval-'+ci);if(lab)lab.textContent=fmtScore(v);const tot=r.scores.reduce(function(a,b){return a+b;},0);const td=$('jdraw-total');if(td)td.textContent=fmtScore(tot)+' / '+(JCRIT.length*JMAX);renderJudging();}
 function openJudge(code){
- const r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return;const tm=teamByCode(code);const ed=canEdit('judging');const total=r.scores.reduce(function(a,b){return a+b;},0);
- let crit=JCRIT.map(function(c,ci){return '<div class="insp-item"><span class="ii-name">'+c+'</span>'+scorePill(code,ci,r.scores[ci],ed)+'</div>';}).join('');
- const body='<div class="dsec"><div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">'+flag(code,'lg')+'<div><div style="font-weight:600;font-size:16px">'+esc(tm?tm.country:code)+'</div><div class="mono" style="color:var(--text-3);font-size:12px">Judge: '+esc(r.judge)+'</div></div><div class="jtotal" style="margin-left:auto;font-size:18px">'+total.toFixed(1)+'</div></div></div><div class="dsec"><div class="dsec-t">Rubric</div>'+crit+'</div><div class="dsec"><div class="dsec-t">Deliberation notes</div>'+(ed?'<textarea class="note-in" id="jnote-'+code+'" placeholder="Notes for deliberation\u2026">'+esc(r.note)+'</textarea><div style="margin-top:8px"><button class="btn sm" data-action="save-judge-note" data-code="'+code+'">'+icon('check')+'Save note</button></div>':'<div style="font-size:13px;color:var(--text-2)">'+(r.note?esc(r.note):'No notes yet.')+'</div>')+'</div>';
+ const r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return;const tm=teamByCode(code);const ed=canEdit('judging');const total=r.scores.reduce(function(a,b){return a+b;},0);const maxTotal=JCRIT.length*JMAX;
+ let crit=JCRIT.map(function(c,ci){var v=r.scores[ci];if(ed){return '<div class="jcrit"><div class="jcrit-top"><span class="jcrit-name">'+c+'</span><span class="jcrit-val" id="jval-'+ci+'">'+fmtScore(v)+'</span></div><input class="jslider" type="range" min="0" max="'+JMAX+'" step="0.5" value="'+v+'" data-jscore data-code="'+code+'" data-ci="'+ci+'"></div>';}else{return '<div class="jcrit"><div class="jcrit-top"><span class="jcrit-name">'+c+'</span>'+scorePill(code,ci,v)+'</div><div class="jbar"><div class="jbar-fill" style="width:'+(v/JMAX*100)+'%"></div></div></div>';}}).join('');
+ const body='<div class="dsec"><div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">'+flag(code,'lg')+'<div><div style="font-weight:600;font-size:16px">'+esc(tm?tm.country:code)+'</div><div class="mono" style="color:var(--text-3);font-size:12px">Judge: '+esc(r.judge)+'</div></div><div style="margin-left:auto;text-align:right"><div class="jtotal" id="jdraw-total" style="font-size:20px">'+fmtScore(total)+' / '+maxTotal+'</div><div style="font-size:11px;color:var(--text-3)">total score</div></div></div></div><div class="dsec"><div class="dsec-t">Rubric \u00b7 each out of '+JMAX+'</div>'+crit+'</div>'+awardHtml(code)+'<div class="dsec"><div class="dsec-t">Comments &amp; notes</div>'+(ed?'<textarea class="note-in" id="jnote-'+code+'" placeholder="Add comments or deliberation notes for this team\u2026">'+esc(r.note)+'</textarea><div style="margin-top:8px"><button class="btn sm primary" data-action="save-judge-note" data-code="'+code+'">'+icon('check')+'Save comment</button></div>':'<div style="font-size:13px;color:var(--text-2)">'+(r.note?esc(r.note):'No comments yet.')+'</div>')+'</div>';
  openDrawer('Judging \u00b7 '+esc(tm?tm.country:code),body,'');
 }
-function saveJudgeNote(code){if(!requireEdit('judging'))return;const r=JUDGE_TEAMS.find(function(x){return x.code===code;});const ta=$('jnote-'+code);if(r&&ta)r.note=ta.value;toast('Note saved');}
-
+function saveJudgeNote(code){if(!requireEdit('judging'))return;const r=JUDGE_TEAMS.find(function(x){return x.code===code;});const ta=$('jnote-'+code);if(r&&ta)r.note=ta.value;toast('Comment saved');renderJudging();}
+function awardHtml(code){var r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return '';var ed=canEdit('judging');var chips=r.awards.length?r.awards.map(function(a,i){return '<span class="award-chip">'+icon('award')+'<span>'+esc(a)+'</span>'+(ed?'<button class="award-x" data-action="remove-award" data-code="'+code+'" data-idx="'+i+'" title="Remove">'+icon('x')+'</button>':'')+'</span>';}).join(''):'<div style="font-size:13px;color:var(--text-3)">Not yet considered for an award.</div>';var add='';if(ed){var avail=AWARDS.filter(function(a){return r.awards.indexOf(a)<0;});if(avail.length){add='<div style="display:flex;gap:8px;margin-top:11px"><select id="award-sel" class="lf-in" style="height:40px;flex:1"><option value="">Considered for\u2026</option>'+avail.map(function(a){return '<option value="'+esc(a)+'">'+esc(a)+'</option>';}).join('')+'</select><button class="btn sm" data-action="add-award" data-code="'+code+'">'+icon('plus')+'Add</button></div>';}}return '<div class="dsec"><div class="dsec-t">Award consideration</div><div class="award-list">'+chips+'</div>'+add+'</div>';}
+function addAward(code){if(!requireEdit('judging'))return;var r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return;var sel=$('award-sel');var v=sel?sel.value:'';if(!v){toast('Pick an award first');return;}if(r.awards.indexOf(v)<0)r.awards.push(v);toast('Considered for award',v);renderJudging();openJudge(code);}
+function removeAward(code,idx){if(!requireEdit('judging'))return;var r=JUDGE_TEAMS.find(function(x){return x.code===code;});if(!r)return;r.awards.splice(idx,1);toast('Removed from consideration');renderJudging();openJudge(code);}
+ 
 /* ================= INSPECTIONS drawer + actions ================= */
 function openTeam(code){
  closeSearch();const t=teamByCode(code);if(!t)return;const ed=canEdit('inspections');
@@ -501,21 +490,20 @@ function openTeam(code){
  openDrawer('Inspection',body,foot);
 }
 function setInspItem(code,i,v){if(!requireEdit('inspections'))return;const t=teamByCode(code);if(!t)return;if(i<0&&v==='allpass'){t.items=t.items.map(function(){return 'pass';});toast('All items passed',t.country);}else{t.items[i]=v;}t.overall=deriveOverall(t.items);if(t.overall!=='Not started'&&!t.inspector)t.inspector=actor();paintInspList();updateNavCounts();openTeam(code);}
-
+ 
 /* ================= HOSPITAL drawer + actions ================= */
 function openTicket(id){
  const t=TICKETS.find(function(x){return x.id===id;});if(!t)return;const ed=canEdit('hospital');
  let log=t.log.map(function(l){return '<div class="logline"><span class="log-dot"></span><div><div class="log-txt">'+esc(l[0])+'</div><div class="log-meta">'+ago(l[1])+'</div></div></div>';}).join('');
  let actions='';
- if(ed){let claim=t.tech?'':'<button class="btn sm primary" data-action="claim-ticket" data-id="'+id+'">'+icon('user')+'Claim</button>';let sb='';['In progress','Done'].forEach(function(s){if(t.st!==s)sb+='<button class="btn sm" data-action="set-ticket-state" data-id="'+id+'" data-st="'+s+'">'+s+'</button>';});let promo=t.st==='Done'?'':'<button class="btn sm hot" data-action="promote-emergency" data-id="'+id+'">'+icon('emergency')+'To Flying Squad</button>';actions='<div class="dsec"><div class="dsec-t">Actions</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+claim+sb+promo+'</div></div><div class="dsec"><div class="dsec-t">Add a note</div><textarea class="note-in" id="tnote" placeholder="Add an update\u2026"></textarea><div style="margin-top:8px"><button class="btn sm" data-action="add-ticket-note" data-id="'+id+'">'+icon('plus')+'Add note</button></div></div>';}
- const body='<div class="dsec"><div style="display:flex;align-items:center;gap:11px;margin-bottom:10px">'+flag(t.code,'lg')+'<div><div style="font-weight:600;font-size:16px">'+esc(t.team)+'</div><div class="mono" style="color:var(--text-3);font-size:12px">'+t.id+'</div></div><div style="margin-left:auto">'+priBadge(t.pri)+'</div></div><div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap">'+ticketBadge(t.st)+(t.type?typeBadge(t.type):'')+'<span style="color:var(--text-3);font-size:12px">open '+fmtAge(t.open)+'</span></div></div><div class="dsec"><div class="dsec-t">Issue</div><div style="font-size:14px">'+esc(t.iss)+'</div></div>'+(t.tech?'<div class="dsec"><div class="dsec-t">Technician</div><div style="display:flex;align-items:center;gap:9px">'+miniAv(t.tech)+'<span style="font-weight:500">'+esc(t.tech)+'</span></div></div>':'')+(t.res?'<div class="dsec"><div class="dsec-t">Resolution</div><div style="font-size:13px;color:var(--text-2)">'+esc(t.res)+'</div></div>':'')+actions+'<div class="dsec"><div class="dsec-t">Timeline</div>'+log+'</div>';
+ if(ed){let claim=t.tech?'':'<button class="btn sm primary" data-action="claim-ticket" data-id="'+id+'">'+icon('user')+'Claim</button>';let sb='';['In progress','Done'].forEach(function(s){if(t.st!==s)sb+='<button class="btn sm" data-action="set-ticket-state" data-id="'+id+'" data-st="'+s+'">'+s+'</button>';});actions='<div class="dsec"><div class="dsec-t">Actions</div><div style="display:flex;gap:8px;flex-wrap:wrap">'+claim+sb+'</div></div><div class="dsec"><div class="dsec-t">Add a note</div><textarea class="note-in" id="tnote" placeholder="Add an update\u2026"></textarea><div style="margin-top:8px"><button class="btn sm" data-action="add-ticket-note" data-id="'+id+'">'+icon('plus')+'Add note</button></div></div>';}
+ const body='<div class="dsec"><div style="display:flex;align-items:center;gap:11px;margin-bottom:10px">'+flag(t.code,'lg')+'<div><div style="font-weight:600;font-size:16px">'+esc(t.team)+'</div><div class="mono" style="color:var(--text-3);font-size:12px">'+t.id+'</div></div><div style="margin-left:auto">'+priBadge(t.pri)+'</div></div><div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap">'+ticketBadge(t.st)+(t.type?typeBadge(t.type):'')+(t.matchAt&&t.st!=='Done'?'<span class="ticket-cd '+cdTone(t.matchAt-Date.now())+'" style="margin-top:0">'+icon('clock')+'<span class="tc-q">'+(t.match||'next')+'</span><span class="tc-t" data-countdown="'+t.matchAt+'">'+fmtCD(t.matchAt-Date.now())+'</span></span>':'')+'<span style="color:var(--text-3);font-size:12px">open '+fmtAge(t.open)+'</span></div></div><div class="dsec"><div class="dsec-t">Issue</div><div style="font-size:14px">'+esc(t.iss)+'</div></div>'+(t.tech?'<div class="dsec"><div class="dsec-t">Technician</div><div style="display:flex;align-items:center;gap:9px">'+miniAv(t.tech)+'<span style="font-weight:500">'+esc(t.tech)+'</span></div></div>':'')+(t.res?'<div class="dsec"><div class="dsec-t">Resolution</div><div style="font-size:13px;color:var(--text-2)">'+esc(t.res)+'</div></div>':'')+actions+'<div class="dsec"><div class="dsec-t">Timeline</div>'+log+'</div>';
  openDrawer('Repair ticket',body,'');
 }
 function claimTicket(id){if(!requireEdit('hospital'))return;const t=TICKETS.find(function(x){return x.id===id;});if(!t)return;t.tech=actor();if(t.st==='Waiting')t.st='In progress';t.log.unshift([actor()+' claimed the ticket',0]);toast('Ticket claimed',t.id);renderHospital();openTicket(id);updateNavCounts();}
 function setTicketState(id,st){if(!requireEdit('hospital'))return;const t=TICKETS.find(function(x){return x.id===id;});if(!t)return;t.st=st;t.log.unshift(['Status set to '+st+' ('+actor()+')',0]);if(st==='Done'&&!t.res)t.res='Marked done by '+actor()+'.';toast('Updated',st);logActivity({ic:'wrench',tone:st==='Done'?'ok':'info',t:esc(t.team)+' ticket '+st.toLowerCase(),s:t.id,station:'hospital'});renderHospital();openTicket(id);updateNavCounts();}
 function addTicketNote(id){if(!requireEdit('hospital'))return;const t=TICKETS.find(function(x){return x.id===id;});const ta=$('tnote');if(!t||!ta||!ta.value.trim())return;t.log.unshift([ta.value.trim()+' ('+actor()+')',0]);toast('Note added');openTicket(id);}
-function promoteEmergency(id){if(!requireEdit('emergency'))return;const t=TICKETS.find(function(x){return x.id===id;});if(!t)return;const up=MATCHES.filter(function(m){return !m.played;}).sort(function(a,b){return a.at-b.at;})[0];const e={id:'FS'+(20+EMERGENCIES.length),code:t.code,team:t.team,q:up?up.q:'Q?',at:up?up.at:Date.now()+5*MIN,iss:t.iss,st:'Waiting',tech:t.tech||null};EMERGENCIES.unshift(e);t.log.unshift(['Promoted to Flying Squad ('+actor()+')',0]);logActivity({ic:'bolt',tone:'hot',t:esc(t.team)+' promoted to Flying Squad',s:t.id+' to '+e.q,station:'emergency'});toast('Promoted to Flying Squad',e.q);closeDrawer();updateNavCounts();go('emergency');}
-
+ 
 /* ================= drawer / activity / search / user menu ================= */
 function openDrawer(title,body,foot){$('drawer-title').innerHTML=title;$('drawer-body').innerHTML=body;$('drawer-foot').innerHTML=foot||'';$('drawer-body').scrollTop=0;$('drawer').classList.add('on');$('scrim').classList.add('on');}
 function closeDrawer(){$('drawer').classList.remove('on');$('scrim').classList.remove('on');}
@@ -525,18 +513,18 @@ function closeSearch(){const p=$('searchpop');if(p)p.classList.remove('on');}
 function buildUserMenu(){if(!state.user)return;const u=state.user;$('um-av').textContent=initials(u.name);$('um-av').style.background=u.c;$('um-name').textContent=u.name;$('um-role').textContent=u.role;$('who').innerHTML=avatar(u.name)+'<div class="who-txt"><div class="who-name">'+esc(u.name)+'</div><div class="who-role">'+esc(u.role)+'</div></div>';const a=access();const ed=a.edit.map(function(s){return STATIONS[s]?STATIONS[s].name:s;}).join(', ');$('um-pop').innerHTML='<div class="um-head">'+avatar(u.name)+'<div><div class="um-h-name">'+esc(u.name)+'</div><div class="um-h-role">'+esc(u.role)+'</div></div></div><div class="um-access"><b>Can edit:</b> '+(a.edit.length===5?'All stations':ed)+'</div><button class="um-row" data-action="signout">'+icon('logout')+'Sign out</button>';}
 function toggleUserMenu(){$('um-pop').classList.toggle('on');}
 function closeUserMenu(){const p=$('um-pop');if(p)p.classList.remove('on');}
-
+ 
 /* ================= LOGIN ================= */
 function buildLogin(){
  let cards=USERS.map(function(u){return '<button class="persona" data-action="persona" data-name="'+u.name+'"><span class="p-av" style="background:'+u.c+'">'+initials(u.name)+'</span><div class="p-mid"><div class="p-name">'+u.name+'</div><div class="p-role">'+u.role+' &middot; '+esc(u.desc)+'</div></div><div class="p-cred"><div class="pc-l">Password</div><div class="pc-v">'+u.pass+'</div></div></button>';}).join('');
- $('login').innerHTML='<div class="login-hero"><svg class="lh-globe" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1"><circle cx="100" cy="100" r="86"/><ellipse cx="100" cy="100" rx="38" ry="86"/><ellipse cx="100" cy="100" rx="68" ry="86"/><line x1="14" y1="100" x2="186" y2="100"/><path d="M22 62h156M22 138h156"/></svg><div class="lh-top"><svg class="lh-mark" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" fill="#244a73"/><path d="M20 5v30M5 20h30M9.2 11c4.2 2.7 17.4 2.7 21.6 0M9.2 29c4.2-2.7 17.4-2.7 21.6 0" stroke="#9db8da" stroke-width="1.1"/><ellipse cx="20" cy="20" rx="6.6" ry="15" stroke="#9db8da" stroke-width="1.1"/><path d="M27.4 6.6c.5 2.6 3 3.3 3 6.2 0 2-1.7 3.5-3.5 3.5s-3.3-1.6-3.3-3.6c0-3.1 3.3-2.9 3.8-6.1z" fill="#e8714f"/></svg><div class="lh-org">FIRST Global<small>Volunteer Operations</small></div></div><div class="lh-mid"><div class="lh-kicker">Igniting Innovation</div><div class="lh-title">Volunteer Operations Console</div><div class="lh-sub">Mission control for the field crew \u00b7 inspections, the Robot Hospital, Flying Squad, queueing and judging, all in one place.</div><div class="lh-meta"><div><div class="lm-k">190+</div><div class="lm-l">Nations</div></div><div><div class="lm-k">7 to 10 Oct</div><div class="lm-l">2026</div></div><div><div class="lm-k">Incheon</div><div class="lm-l">Republic of Korea</div></div></div></div><div class="lh-foot">Proof of concept &middot; mock data for demonstration</div></div><div class="login-panel"><div class="lp-inner"><div class="lf-h">Volunteer sign-in</div><div class="lf-sub">Enter your name and password, or pick a profile below.</div><div class="lf-field"><label class="fld-label">Name</label><input id="li-name" class="lf-in" type="text" placeholder="e.g. Roberto" autocomplete="off"></div><div class="lf-field"><label class="fld-label">Password</label><input id="li-pass" class="lf-in" type="password" placeholder="Your password"></div><div class="lf-err" id="li-err"></div><button class="btn primary block" data-action="login-submit">Sign in '+icon('arrow')+'</button><div class="lf-divider">Fast login</div><div class="personas">'+cards+'</div></div></div>';
+ $('login').innerHTML='<div class="login-hero"><svg class="lh-globe" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1"><circle cx="100" cy="100" r="86"/><ellipse cx="100" cy="100" rx="38" ry="86"/><ellipse cx="100" cy="100" rx="68" ry="86"/><line x1="14" y1="100" x2="186" y2="100"/><path d="M22 62h156M22 138h156"/></svg><div class="lh-top"><svg class="lh-mark" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" fill="#244a73"/><path d="M20 5v30M5 20h30M9.2 11c4.2 2.7 17.4 2.7 21.6 0M9.2 29c4.2-2.7 17.4-2.7 21.6 0" stroke="#9db8da" stroke-width="1.1"/><ellipse cx="20" cy="20" rx="6.6" ry="15" stroke="#9db8da" stroke-width="1.1"/><path d="M27.4 6.6c.5 2.6 3 3.3 3 6.2 0 2-1.7 3.5-3.5 3.5s-3.3-1.6-3.3-3.6c0-3.1 3.3-2.9 3.8-6.1z" fill="#e8714f"/></svg><div class="lh-org">FIRST Global<small>Volunteer Operations</small></div></div><div class="lh-mid"><div class="lh-kicker">Igniting Innovation</div><div class="lh-title">Volunteer Operations Console</div><div class="lh-sub">Mission control for the field crew \u00b7 inspections, the Robot Hospital, spare parts, queueing and judging, all in one place.</div><div class="lh-meta"><div><div class="lm-k">190+</div><div class="lm-l">Nations</div></div><div><div class="lm-k">7 to 10 Oct</div><div class="lm-l">2026</div></div><div><div class="lm-k">Incheon</div><div class="lm-l">Republic of Korea</div></div></div></div><div class="lh-foot">Proof of concept &middot; mock data for demonstration</div></div><div class="login-panel"><div class="lp-inner"><div class="lf-h">Volunteer sign-in</div><div class="lf-sub">Enter your name and password, or pick a profile below.</div><div class="lf-field"><label class="fld-label">Name</label><input id="li-name" class="lf-in" type="text" placeholder="e.g. Roberto" autocomplete="off"></div><div class="lf-field"><label class="fld-label">Password</label><input id="li-pass" class="lf-in" type="password" placeholder="Your password"></div><div class="lf-err" id="li-err"></div><button class="btn primary block" data-action="login-submit">Sign in '+icon('arrow')+'</button><div class="lf-divider">Fast login</div><div class="personas">'+cards+'</div></div></div>';
 }
 function loginErr(m){const e=$('li-err');if(e)e.textContent=m||'';}
 function attemptLogin(){const n=(($('li-name')||{}).value)||'';const p=(($('li-pass')||{}).value)||'';if(!n.trim()){loginErr('Enter your name to sign in.');return;}const u=USERS.find(function(x){return x.name.toLowerCase()===n.trim().toLowerCase();});if(!u){loginErr('We couldn\u2019t find a volunteer named \u201c'+n.trim()+'\u201d. Try a fast login profile below.');return;}if(u.pass!==p){loginErr('That password doesn\u2019t match \u00b7 check the profile card below.');return;}doLogin(u);}
 function personaLogin(name){const u=USERS.find(function(x){return x.name===name;});if(u)doLogin(u);}
 function doLogin(u){state.user=u;state.role=u.role;state.inspFilter='all';state.inspView='board';state.inspQuery='';state.hospPri='all';state.hospQuery='';state.emgFilter='active';document.body.classList.add('authed');buildNav();buildUserMenu();go(u.home);toast('Signed in as '+u.name,u.role);}
 function signOut(){closeDrawer();closeUserMenu();closeSearch();closeDisplay();document.body.classList.remove('authed');state.user=null;const n=$('li-name'),p=$('li-pass');if(n)n.value='';if(p)p.value='';loginErr('');window.scrollTo(0,0);}
-
+ 
 /* ================= events + loop ================= */
 function onClick(e){
  const actEl=e.target.closest('[data-action]');
@@ -552,17 +540,13 @@ function onClick(e){
   case 'claim-ticket':claimTicket(D('id'));break;
   case 'set-ticket-state':setTicketState(D('id'),D('st'));break;
   case 'add-ticket-note':addTicketNote(D('id'));break;
-  case 'promote-emergency':promoteEmergency(D('id'));break;
-  case 'open-emg':openEmg(D('id'));break;
-  case 'set-emg-state':setEmgState(D('id'),D('st'));break;
-  case 'assign-emg':assignEmg(D('id'));break;
-  case 'emg-filter':state.emgFilter=D('f');renderEmergency();break;
-  case 'emg-display':openDisplay();break;
+  case 'hosp-display':openDisplay();break;
   case 'display-close':closeDisplay();break;
   case 'q-advance':advanceQ(D('q'),D('code'));break;
-  case 'j-score':cycleScore(D('code'),parseInt(D('ci'),10));break;
   case 'open-judge':openJudge(D('code'));break;
   case 'save-judge-note':saveJudgeNote(D('code'));break;
+  case 'add-award':addAward(D('code'));break;
+  case 'remove-award':removeAward(D('code'),parseInt(D('idx'),10));break;
   case 'insp-filter':state.inspFilter=D('f');renderInspections();break;
   case 'insp-view':state.inspView=D('v');renderInspections();break;
   case 'insp-item':setInspItem(D('code'),parseInt(D('i'),10),D('v'));break;
@@ -570,12 +554,7 @@ function onClick(e){
   case 'hosp-new':openHospIntake();break;
   case 'hosp-type':intakeType=D('t');var bb=document.querySelectorAll('#drawer-body [data-action="hosp-type"]');for(var bi=0;bi<bb.length;bi++){bb[bi].classList.toggle('on',bb[bi].getAttribute('data-t')===intakeType);}break;
   case 'hosp-create':createHospTicket();break;
-  case 'spare-pick':pickSpare(D('no'));break;
-  case 'spare-clear':selSpare=null;renderSpares();break;
   case 'spare-create':createSpareReq();break;
-  case 'spare-edit':editSpareReq(D('id'));break;
-  case 'spare-remove':removeSpareReq(D('id'));break;
-  case 'spare-edit-save':saveSpareEdit();break;
   case 'open-new-kit':openNewKit();break;
   case 'spare-filter':state.spareCat=D('f');renderSpares();break;
   case 'combo-pick':comboPick(D('prefix'),D('val'));break;
@@ -590,7 +569,7 @@ function onClick(e){
   default:break;
  }
 }
-function onInput(e){const id=e.target.id;const cb=e.target.getAttribute&&e.target.getAttribute('data-combo');if(cb){comboFilter(cb,e.target.value);return;}if(id==='insp-search'){state.inspQuery=e.target.value;paintInspList();}else if(id==='hosp-search'){state.hospQuery=e.target.value;paintHospBoard();}else if(id==='gsearch'){doSearch(e.target.value);}else if(id==='spare-search'){doSpareSearch(e.target.value);}else if(id==='spare-cat-search'){state.spareQuery=e.target.value;paintCatalog();}}
+function onInput(e){const id=e.target.id;const cb=e.target.getAttribute&&e.target.getAttribute('data-combo');if(cb){comboFilter(cb,e.target.value);return;}if(e.target.hasAttribute&&e.target.hasAttribute('data-jscore')){jSet(e.target.getAttribute('data-code'),parseInt(e.target.getAttribute('data-ci'),10),parseFloat(e.target.value));return;}if(id==='insp-search'){state.inspQuery=e.target.value;paintInspList();}else if(id==='hosp-search'){state.hospQuery=e.target.value;paintHospBoard();}else if(id==='gsearch'){doSearch(e.target.value);}else if(id==='spare-cat-search'){state.spareQuery=e.target.value;paintCatalog();}}
 function onKey(e){
  if(e.key==='Escape'){closeDrawer();closeSearch();closeUserMenu();closeDisplay();return;}
  if(e.key==='Enter'&&(e.target.id==='li-name'||e.target.id==='li-pass')){attemptLogin();return;}
@@ -600,10 +579,10 @@ function tickClock(){const c=$('ec-clock');if(c){const d=new Date();c.textConten
 setInterval(function(){
  const now=Date.now();tickClock();
  const dcl=$('disp-clock');if(dcl)dcl.textContent=clockHM(now);
- document.querySelectorAll('[data-countdown]').forEach(function(el){const tgt=+el.getAttribute('data-countdown');const ms=tgt-now;el.textContent=fmtCD(ms);const row=el.closest('.ticker-row');if(row)row.classList.toggle('urgent',ms>0&&ms<=180000);const ec=el.closest('.ecard');if(ec&&!ec.getAttribute('data-resolved')){ec.classList.remove('t-crit','t-warn');const tt=cdTone(ms);if(tt!=='t-ok')ec.classList.add(tt);}const dc=el.closest('.dcard');if(dc){dc.classList.remove('t-crit','t-warn');const tt=cdTone(ms);if(tt!=='t-ok')dc.classList.add(tt);}});
+ document.querySelectorAll('[data-countdown]').forEach(function(el){const tgt=+el.getAttribute('data-countdown');const ms=tgt-now;el.textContent=fmtCD(ms);const row=el.closest('.ticker-row');if(row)row.classList.toggle('urgent',ms>0&&ms<=180000);const dc=el.closest('.dcard');if(dc){dc.classList.remove('t-crit','t-warn');const tt=cdTone(ms);if(tt!=='t-ok')dc.classList.add(tt);}const tcd=el.closest('.ticket-cd');if(tcd){tcd.classList.remove('t-crit','t-warn','t-ok');tcd.classList.add(cdTone(ms));}});
  const up=MATCHES.filter(function(m){return !m.played;}).sort(function(a,b){return a.at-b.at;})[0];const en=$('ec-next');if(en&&up)en.textContent=up.q+' '+fmtCD(up.at-now);
 },1000);
-
+ 
 function init(){
  buildLogin();tickClock();
  const an=$('act-n');if(an)an.textContent=ACTIVITY.length;
@@ -613,7 +592,7 @@ function init(){
  document.addEventListener('keydown',onKey);
 }
 if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init);
-
+ 
 /* ===== spare parts: 2025 FIRST Global kit of parts ===== */
 const SPARES=[
  {no:'REV-41-1215',desc:'Storage Tote Orange',cat:'General',qty:1},
@@ -770,54 +749,71 @@ const SPARES=[
  {no:'REV-41-3049',desc:'Polycarbonate Sheet 400x350x1mm',cat:'Structure',qty:4}
 ];
 let kitsOpen=2;
-SPARES.forEach(function(p){p.inv=p.qty*kitsOpen;});
+SPARES.forEach(function(p){p.inv=p.qty*kitsOpen;p.req=0;p.reqUnits=0;});
 const comboSel={};
 const NAMES=VOLUNTEERS.map(function(v){return v.n;});
+let selPart=null;
+// recent request log; stock and the most-requested chart are derived from it
 const SPARE_REQUESTS=[
- {id:'SP304',no:'REV-41-1300',desc:'Core Hex Motor',qty:1,code:'ng',team:'Nigeria',by:'Doc',when:8},
- {id:'SP303',no:'REV-31-1392-PK2',desc:'XT30 extension Cable 30cm 2 Pack',qty:1,code:'br',team:'Brazil',by:'Doc',when:16},
- {id:'SP302',no:'REV-41-3334',desc:'Smart Robot Servo V2',qty:2,code:'de',team:'Germany',by:'Doc',when:34},
- {id:'SP301',no:'REV-41-1365',desc:'#25 Roller Chain 10ft',qty:1,code:'ke',team:'Kenya',by:'Doc',when:52}
+ {no:'REV-41-3334',code:'de',team:'Germany',qty:6,by:'Doc',when:6},
+ {no:'REV-41-1300',code:'ng',team:'Nigeria',qty:2,by:'Doc',when:11},
+ {no:'REV-41-1359-PK100',code:'jp',team:'Japan',qty:12,by:'Doc',when:19},
+ {no:'REV-41-3334',code:'br',team:'Brazil',qty:4,by:'Doc',when:24},
+ {no:'REV-41-1828',code:'us',team:'United States',qty:5,by:'Doc',when:30},
+ {no:'REV-41-1365',code:'ke',team:'Kenya',qty:2,by:'Doc',when:37},
+ {no:'REV-31-1557',code:'in',team:'India',qty:4,by:'Doc',when:44},
+ {no:'REV-41-1300',code:'it',team:'Italy',qty:2,by:'Doc',when:52},
+ {no:'REV-41-1432-PK4',code:'ca',team:'Canada',qty:6,by:'Doc',when:61},
+ {no:'REV-41-1359-PK100',code:'kr',team:'Korea',qty:8,by:'Doc',when:70},
+ {no:'REV-41-1828',code:'mx',team:'Mexico',qty:3,by:'Doc',when:78},
+ {no:'REV-41-1300',code:'fr',team:'France',qty:1,by:'Doc',when:86},
+ {no:'REV-41-3334',code:'za',team:'South Africa',qty:2,by:'Doc',when:95},
+ {no:'REV-41-1162',code:'eg',team:'Egypt',qty:3,by:'Doc',when:104},
+ {no:'REV-41-1365',code:'pl',team:'Poland',qty:2,by:'Doc',when:112},
+ {no:'REV-41-1300',code:'au',team:'Australia',qty:1,by:'Doc',when:120},
+ {no:'REV-31-1392-PK2',code:'es',team:'Spain',qty:2,by:'Doc',when:131},
+ {no:'REV-41-1364-PK4',code:'nl',team:'Netherlands',qty:4,by:'Doc',when:140}
 ];
-SPARE_REQUESTS.forEach(function(r){var p=SPARES.find(function(x){return x.no===r.no;});if(p)p.inv=Math.max(0,p.inv-r.qty);});
-
+SPARE_REQUESTS.forEach(function(r){var p=SPARES.find(function(x){return x.no===r.no;});if(!p)return;r.desc=p.desc;p.req+=1;p.reqUnits+=r.qty;p.inv=Math.max(0,p.inv-r.qty);});
+ 
 /* ===== spare parts views ===== */
+function partSelectHtml(){var cats=[];SPARES.forEach(function(p){if(cats.indexOf(p.cat)<0)cats.push(p.cat);});var opts='<option value="">Choose a part\u2026</option>';cats.forEach(function(c){opts+='<optgroup label="'+esc(c)+'">';SPARES.filter(function(p){return p.cat===c;}).forEach(function(p){opts+='<option value="'+p.no+'"'+(selPart===p.no?' selected':'')+(p.inv<=0?' disabled':'')+'>'+esc(p.desc)+' ('+p.no+')'+(p.inv<=0?' \u00b7 out of stock':' \u00b7 '+p.inv+' in stock')+'</option>';});opts+='</optgroup>';});return '<select id="spart" class="lf-in" style="height:44px">'+opts+'</select>';}
 function renderSpares(){
  const ed=canEdit('spares');
  const cats=[];SPARES.forEach(function(p){if(cats.indexOf(p.cat)<0)cats.push(p.cat);});
  const lowStock=SPARES.filter(function(p){return p.inv<=0;}).length;
- let html=phead('spares','Spare parts','Request replacement parts from the official FGC kit. '+(ed?'Pick a part, set the quantity, and choose the requesting team. Stock counts down as parts go out.':'Browse the kit catalog below. The parts desk logs and hands out requests.'),
-   kpi(SPARE_REQUESTS.length,'Requests','warn')+kpi(SPARES.length,'Catalog parts','acc')+kpi(kitsOpen,'Kits open','acc')+kpi(lowStock,'Out of stock',lowStock?'bad':'ok'));
+ const totalReq=SPARE_REQUESTS.length;
+ let html=phead('spares','Spare parts','Teams request replacement parts from the official FGC kit. Stock counts down with each request \u00b7 anything out of stock shows in red.',
+   kpi(SPARES.length,'Catalog parts','acc')+kpi(totalReq,'Requests logged','warn')+kpi(kitsOpen,'Kits open','acc')+kpi(lowStock,'Out of stock',lowStock?'bad':'ok'));
  if(ed){
-   let sel=selSpare?('<div style="display:flex;align-items:center;gap:11px;margin-top:11px;padding:11px 13px;border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:11px">'+icon('box')+'<div style="flex:1"><div style="font-weight:600;font-size:13px">'+esc(selSpare.desc)+'</div><div class="mono" style="font-size:11px;color:var(--text-3)">'+selSpare.no+' \u00b7 '+esc(selSpare.cat)+' \u00b7 '+selSpare.inv+' in stock</div></div><button class="iconbtn" data-action="spare-clear" title="Clear selection">'+icon('x')+'</button></div>'):'';
-   html+='<div class="panel" style="margin-bottom:18px"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('plus')+'</span><div><h3>New part request</h3><div class="ph-sub">Logged by '+esc(actor())+'</div></div></div><div style="padding:16px"><div style="margin-bottom:14px"><label class="fld-label">Part (search by number or name)</label><div style="position:relative"><input id="spare-search" class="lf-in" type="text" placeholder="e.g. Core Hex Motor, or REV 41 1300" autocomplete="off" style="height:44px"><div class="searchpop" id="spare-pop"></div></div>'+sel+'</div><div style="display:grid;grid-template-columns:120px 1fr;gap:14px;margin-bottom:16px"><div><label class="fld-label">Quantity</label><input id="spare-qty" class="lf-in" type="number" min="1" value="1" style="height:44px"></div><div><label class="fld-label">Requesting team</label>'+countryCombo('spteam','Type a country\u2026')+'</div></div><button class="btn primary" data-action="spare-create">'+icon('check')+'Log request</button></div></div>';
+   html+='<div class="panel" style="margin-bottom:18px"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('plus')+'</span><div><h3>New part request</h3><div class="ph-sub">Logged by '+esc(actor())+'</div></div></div><div style="padding:16px"><div style="display:grid;grid-template-columns:1fr 1fr 110px;gap:14px;margin-bottom:16px"><div><label class="fld-label">Requesting team</label>'+countryCombo('spteam','Type a country\u2026')+'</div><div><label class="fld-label">Part</label>'+partSelectHtml()+'</div><div><label class="fld-label">Quantity</label><input id="spare-qty" class="lf-in" type="number" min="1" value="1" style="height:44px"></div></div><button class="btn primary" data-action="spare-create">'+icon('check')+'Log request</button></div></div>';
  }
- let reqRows=SPARE_REQUESTS.map(function(r){const tm=teamByCode(r.code);return '<tr><td><div style="font-weight:600">'+esc(r.desc)+'</div><div class="mono" style="font-size:11px;color:var(--text-3)">'+r.no+'</div></td><td class="mono" style="text-align:center">'+r.qty+'</td><td><div class="cell-team">'+flag(r.code)+esc(tm?tm.country:r.team)+'</div></td><td style="color:var(--text-2);font-size:12px"><div style="display:flex;align-items:center;gap:7px">'+miniAv(r.by)+esc(r.by)+'</div></td>'+(ed?'<td style="text-align:right;white-space:nowrap"><button class="btn sm ghost" data-action="spare-edit" data-id="'+r.id+'">Edit</button> <button class="btn sm ghost" data-action="spare-remove" data-id="'+r.id+'">Remove</button></td>':'<td></td>')+'</tr>';}).join('');
- if(!reqRows)reqRows='<tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:24px">No part requests yet.</td></tr>';
- html+='<div class="panel" style="margin-bottom:18px"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('list')+'</span><div><h3>Part requests</h3><div class="ph-sub">'+SPARE_REQUESTS.length+' logged</div></div>'+(ed?'<div style="margin-left:auto;display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-3)">Kits open <b style="color:var(--text-1);font-family:var(--mono)">'+kitsOpen+'</b></span><button class="btn sm" data-action="open-new-kit">'+icon('plus')+'Open new kit</button></div>':'')+'</div><div style="overflow-x:auto"><table class="ltable"><thead><tr><th>Part</th><th style="text-align:center">Qty</th><th>Team</th><th>Logged by</th><th></th></tr></thead><tbody>'+reqRows+'</tbody></table></div></div>';
+ // most requested top 15
+ const ranked=SPARES.filter(function(p){return p.req>0;}).sort(function(a,b){return b.reqUnits-a.reqUnits||b.req-a.req;}).slice(0,15);
+ const maxU=ranked.length?ranked[0].reqUnits:1;
+ let topRows=ranked.map(function(p,i){var pct=Math.round(p.reqUnits/maxU*100);var out=p.inv<=0;return '<tr><td class="mono" style="color:var(--text-3);text-align:center">'+(i+1)+'</td><td><div style="font-weight:600;font-size:13px">'+esc(p.desc)+'</div><div class="mono" style="font-size:11px;color:var(--text-3)">'+p.no+'</div></td><td style="width:34%"><div class="reqbar"><div class="reqbar-fill" style="width:'+pct+'%"></div></div></td><td class="mono" style="text-align:center;font-weight:600">'+p.reqUnits+'</td><td class="mono" style="text-align:center;color:var(--text-3)">'+p.req+'</td><td style="text-align:right"><span class="'+(out?'stock-pill out':(p.inv<=p.qty?'stock-pill low':'stock-pill'))+'">'+(out?'Out':p.inv)+'</span></td></tr>';}).join('');
+ if(!topRows)topRows='<tr><td colspan="6" style="text-align:center;color:var(--text-3);padding:20px">No requests yet.</td></tr>';
+ html+='<div class="dash-grid" style="margin-bottom:18px"><div class="span-8"><div class="panel"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('chart')+'</span><div><h3>Most requested parts</h3><div class="ph-sub">Top 15 by units requested</div></div></div><div style="overflow-x:auto"><table class="ltable"><thead><tr><th style="text-align:center">#</th><th>Part</th><th>Demand</th><th style="text-align:center">Units</th><th style="text-align:center">Times</th><th style="text-align:right">Stock</th></tr></thead><tbody>'+topRows+'</tbody></table></div></div></div>'+spareRecentHtml()+'</div>';
+ // catalog
  let catChips='<button class="chip'+(state.spareCat==='all'?' on':'')+'" data-action="spare-filter" data-f="all">All<span class="c-n">'+SPARES.length+'</span></button>'+cats.map(function(c){const n=SPARES.filter(function(p){return p.cat===c;}).length;return '<button class="chip'+(state.spareCat===c?' on':'')+'" data-action="spare-filter" data-f="'+esc(c)+'">'+esc(c)+'<span class="c-n">'+n+'</span></button>';}).join('');
- html+='<div class="panel"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('box')+'</span><div><h3>Kit catalog</h3><div class="ph-sub">2025 FIRST Global kit of parts \u00b7 '+kitsOpen+' kits open</div></div></div><div style="padding:14px 16px"><div class="toolbar" style="margin:0 0 14px"><div class="chips">'+catChips+'</div><div class="tb-search">'+icon('search')+'<input id="spare-cat-search" type="text" placeholder="Search catalog\u2026" value="'+esc(state.spareQuery)+'"></div></div><div id="spare-catalog"></div></div></div>';
+ html+='<div class="panel"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('box')+'</span><div><h3>Kit catalog</h3><div class="ph-sub">2025 FIRST Global kit of parts</div></div>'+(ed?'<div style="margin-left:auto;display:flex;align-items:center;gap:12px"><span style="font-size:12px;color:var(--text-3)">Kits open <b style="color:var(--text-1);font-family:var(--mono)">'+kitsOpen+'</b></span><button class="btn sm" data-action="open-new-kit">'+icon('plus')+'Open new kit</button></div>':'')+'</div><div style="padding:14px 16px"><div class="toolbar" style="margin:0 0 14px"><div class="chips">'+catChips+'</div><div class="tb-search">'+icon('search')+'<input id="spare-cat-search" type="text" placeholder="Search catalog\u2026" value="'+esc(state.spareQuery)+'"></div></div><div id="spare-catalog"></div></div></div>';
  $('view-spares').innerHTML=html;
  paintCatalog();
 }
+function spareRecentHtml(){var recent=SPARE_REQUESTS.slice().sort(function(a,b){return a.when-b.when;}).slice(0,7);var rows=recent.map(function(r){var tm=teamByCode(r.code);return '<div class="recent-row"><div class="cell-team" style="flex:1;min-width:0">'+flag(r.code)+'<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(tm?tm.country:r.team)+'</span></div><div style="font-size:12px;color:var(--text-2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(r.desc||r.no)+'</div><span class="mono" style="font-weight:600;font-size:12px">x'+r.qty+'</span></div>';}).join('');if(!recent.length)rows='<div style="color:var(--text-3);font-size:13px;padding:14px">No requests yet.</div>';return '<div class="span-4"><div class="panel"><div class="panel-h"><span class="ph-ic" style="background:var(--accent)">'+icon('list')+'</span><div><h3>Recent requests</h3><div class="ph-sub">Latest from the parts desk</div></div></div><div style="padding:6px 14px 12px">'+rows+'</div></div></div>';}
+function createSpareReq(){if(!requireEdit('spares'))return;var code=comboSel.spteam;if(!code){toast('Choose a team');return;}var no=($('spart')||{}).value;if(!no){toast('Choose a part');return;}var p=SPARES.find(function(x){return x.no===no;});if(!p)return;var qn=parseInt(($('spare-qty')||{}).value,10);var qty=qn>0?qn:1;if(p.inv<=0){toast('Out of stock',p.no);return;}if(qty>p.inv){qty=p.inv;toast('Only '+p.inv+' in stock','requesting '+qty);}p.inv-=qty;p.req+=1;p.reqUnits+=qty;var tm=teamByCode(code);var r={no:p.no,desc:p.desc,code:code,team:tm?tm.country:code,qty:qty,by:actor(),when:0};SPARE_REQUESTS.forEach(function(x){x.when+=0;});SPARE_REQUESTS.unshift(r);logActivity({ic:'box',tone:'info',t:esc(r.team)+' requested '+esc(p.desc),s:p.no+' \u00b7 x'+qty,station:'spares'});toast('Request logged',p.desc+' \u00b7 x'+qty);comboSel.spteam='';selPart=null;renderSpares();updateNavCounts();}
 function paintCatalog(){
- const box=$('spare-catalog');if(!box)return;const ed=canEdit('spares');
+ const box=$('spare-catalog');if(!box)return;
  let list=SPARES.slice();
  if(state.spareCat!=='all')list=list.filter(function(p){return p.cat===state.spareCat;});
  const q=state.spareQuery.trim().toLowerCase();
  if(q)list=list.filter(function(p){return p.desc.toLowerCase().indexOf(q)>=0||p.no.toLowerCase().indexOf(q)>=0||p.no.toLowerCase().replace(/-/g,'').indexOf(q.replace(/[-\s]/g,''))>=0||p.cat.toLowerCase().indexOf(q)>=0;});
- let rows=list.map(function(p){var cls=p.inv<=0?'stock-pill out':(p.inv<=p.qty?'stock-pill low':'stock-pill');var stk=p.inv<=0?'Out':String(p.inv);return '<tr><td class="mono" style="font-size:12px;white-space:nowrap">'+p.no+'</td><td>'+esc(p.desc)+'</td><td style="color:var(--text-3);font-size:12px">'+esc(p.cat)+'</td><td class="mono" style="text-align:center;color:var(--text-3)">'+p.qty+'</td><td style="text-align:center"><span class="'+cls+'">'+stk+'</span></td>'+(ed?'<td style="text-align:right">'+(p.inv>0?'<button class="btn sm" data-action="spare-pick" data-no="'+p.no+'">Request</button>':'<button class="btn sm ghost" disabled style="opacity:.5;cursor:not-allowed">Out</button>')+'</td>':'<td></td>')+'</tr>';}).join('');
- if(!rows)rows='<tr><td colspan="6" style="text-align:center;color:var(--text-3);padding:24px">No parts match.</td></tr>';
- box.innerHTML='<table class="ltable"><thead><tr><th>Part number</th><th>Description</th><th>Category</th><th style="text-align:center">Per kit</th><th style="text-align:center">In stock</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+ let rows=list.map(function(p){var out=p.inv<=0;var cls=out?'stock-pill out':(p.inv<=p.qty?'stock-pill low':'stock-pill');var stk=out?'Out of stock':String(p.inv)+' in stock';return '<tr'+(out?' style="background:#fdf3f2"':'')+'><td class="mono" style="font-size:12px;white-space:nowrap">'+p.no+'</td><td'+(out?' style="color:var(--bad);font-weight:600"':'')+'>'+esc(p.desc)+'</td><td style="color:var(--text-3);font-size:12px">'+esc(p.cat)+'</td><td class="mono" style="text-align:center;color:var(--text-3)">'+p.qty+'</td><td style="text-align:right"><span class="'+cls+'">'+stk+'</span></td></tr>';}).join('');
+ if(!rows)rows='<tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:24px">No parts match.</td></tr>';
+ box.innerHTML='<table class="ltable"><thead><tr><th>Part number</th><th>Description</th><th>Category</th><th style="text-align:center">Per kit</th><th style="text-align:right">Stock</th></tr></thead><tbody>'+rows+'</tbody></table>';
 }
-function doSpareSearch(q){const pop=$('spare-pop');if(!pop)return;q=String(q).trim().toLowerCase();if(!q){pop.classList.remove('on');return;}const nq=q.replace(/[-\s]/g,'');const res=SPARES.filter(function(p){return p.desc.toLowerCase().indexOf(q)>=0||p.no.toLowerCase().indexOf(q)>=0||p.no.toLowerCase().replace(/-/g,'').indexOf(nq)>=0;}).slice(0,8);let h='';if(!res.length)h='<div class="sp-empty">No parts found</div>';else h=res.map(function(p){return '<div class="sp-row" data-action="spare-pick" data-no="'+p.no+'"><span class="sp-name">'+esc(p.desc)+'</span><span class="sp-meta">'+p.no+'</span></div>';}).join('');pop.innerHTML=h;pop.classList.add('on');}
-function pickSpare(no){const p=SPARES.find(function(x){return x.no===no;});if(!p)return;selSpare=p;const pop=$('spare-pop');if(pop)pop.classList.remove('on');if(state.station!=='spares'){go('spares');}else{renderSpares();}}
-function createSpareReq(){if(!requireEdit('spares'))return;if(!selSpare){toast('Pick a part first');return;}var p=SPARES.find(function(x){return x.no===selSpare.no;});var qn=parseInt(($('spare-qty')||{}).value,10);var qty=qn>0?qn:1;var code=comboSel.spteam;if(!code){toast('Choose a team');return;}var tm=teamByCode(code);if(p&&p.inv<=0){toast('Out of stock',selSpare.no);return;}if(p&&qty>p.inv){qty=p.inv;toast('Only '+p.inv+' in stock','requesting '+qty);}if(p)p.inv-=qty;var r={id:'SP'+(305+SPARE_REQUESTS.length),no:selSpare.no,desc:selSpare.desc,qty:qty,code:code,team:tm?tm.country:code,by:actor(),when:0};SPARE_REQUESTS.unshift(r);logActivity({ic:'box',tone:'info',t:esc(r.team)+' requested '+esc(selSpare.desc),s:selSpare.no+' x'+qty,station:'spares'});toast('Request logged',selSpare.no+' \u00b7 x'+qty);selSpare=null;comboSel.spteam='';renderSpares();updateNavCounts();}
-function editSpareReq(id){if(!requireEdit('spares'))return;var r=SPARE_REQUESTS.find(function(x){return x.id===id;});if(!r)return;editReqId=id;comboSel.editteam=r.code;var body='<div class="dsec"><div style="display:flex;align-items:center;gap:11px;margin-bottom:4px">'+icon('box')+'<div><div style="font-weight:600;font-size:14px">'+esc(r.desc)+'</div><div class="mono" style="font-size:11px;color:var(--text-3)">'+r.no+'</div></div></div></div><div class="dsec"><div class="dsec-t">Quantity</div><input id="edit-qty" class="lf-in" type="number" min="1" value="'+r.qty+'" style="height:44px;max-width:150px"></div><div class="dsec"><div class="dsec-t">Requesting team</div>'+countryCombo('editteam','Type a country\u2026')+'</div>';openDrawer('Edit request',body,'<button class="btn primary" data-action="spare-edit-save" style="flex:1">'+icon('check')+'Save changes</button>');}
-function saveSpareEdit(){if(!requireEdit('spares'))return;var r=SPARE_REQUESTS.find(function(x){return x.id===editReqId;});if(!r)return;var qn=parseInt(($('edit-qty')||{}).value,10);var nq=qn>0?qn:1;var code=comboSel.editteam||r.code;var tm=teamByCode(code);var p=SPARES.find(function(x){return x.no===r.no;});if(p){var avail=p.inv+r.qty;if(nq>avail){nq=avail;toast('Capped to stock','x'+nq);}p.inv=Math.max(0,avail-nq);}r.qty=nq;r.code=code;r.team=tm?tm.country:code;toast('Request updated',r.no);closeDrawer();editReqId=null;renderSpares();updateNavCounts();}
-function removeSpareReq(id){if(!requireEdit('spares'))return;var i=-1;SPARE_REQUESTS.forEach(function(x,ix){if(x.id===id)i=ix;});if(i<0)return;var r=SPARE_REQUESTS[i];var p=SPARES.find(function(x){return x.no===r.no;});if(p)p.inv+=r.qty;SPARE_REQUESTS.splice(i,1);toast('Request removed',r.no);renderSpares();updateNavCounts();}
 function openNewKit(){if(!requireEdit('spares'))return;kitsOpen++;SPARES.forEach(function(p){p.inv+=p.qty;});logActivity({ic:'box',tone:'ok',t:'New kit opened',s:'Kits open: '+kitsOpen,station:'spares'});toast('New kit opened','Now '+kitsOpen+' kits');renderSpares();updateNavCounts();}
-
+ 
 /* ===== robot hospital intake ===== */
 function openHospIntake(){
  if(!requireEdit('hospital'))return;
@@ -828,13 +824,13 @@ function openHospIntake(){
  openDrawer('Log a repair',body,'<button class="btn primary" data-action="hosp-create" style="flex:1">'+icon('check')+'Add to Robot Hospital</button>');
 }
 function createHospTicket(){if(!requireEdit('hospital'))return;var code=comboSel.hiteam;if(!code){toast('Choose a team');return;}var det=(($('hi-details')||{}).value||'').trim();var tm=teamByCode(code);var tech=comboSel.hitech||actor();var id='RH'+(245+TICKETS.length);var iss=det||((intakeType==='Other'?'General':intakeType)+' issue reported');var t={id:id,code:code,team:tm?tm.country:code,iss:iss,type:intakeType,pri:'normal',st:'In progress',tech:tech,open:0,log:[[tech+' is helping ('+intakeType.toLowerCase()+')'+(tech!==actor()?' \u00b7 logged by '+actor():''),0]]};TICKETS.unshift(t);logActivity({ic:'wrench',tone:'info',t:esc(t.team)+' in the Robot Hospital',s:intakeType+' \u00b7 '+tech,station:'hospital'});toast('Ticket added',id);closeDrawer();intakeType='Mechanical';renderHospital();updateNavCounts();}
-
+ 
 /* ===== flag + name comboboxes ===== */
 function countryCombo(prefix,ph){var code=comboSel[prefix]||'';var c=code?COUNTRIES.find(function(x){return x[0]===code;}):null;var label=c?c[1]:'';var fl=code?flag(code,'sm'):'';return '<div style="position:relative"><span id="'+prefix+'-fl" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);display:flex;pointer-events:none;z-index:1">'+fl+'</span><input id="'+prefix+'-in" data-combo="'+prefix+'" data-kind="country" class="lf-in" type="text" autocomplete="off" placeholder="'+ph+'" value="'+esc(label)+'" style="height:44px;padding-left:'+(code?'40px':'13px')+'"><div class="searchpop" id="'+prefix+'-pop"></div></div>';}
 function nameCombo(prefix,ph){var nm=comboSel[prefix]||'';var av=nm?miniAv(nm):'';return '<div style="position:relative"><span id="'+prefix+'-fl" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);display:flex;pointer-events:none;z-index:1">'+av+'</span><input id="'+prefix+'-in" data-combo="'+prefix+'" data-kind="name" class="lf-in" type="text" autocomplete="off" placeholder="'+ph+'" value="'+esc(nm)+'" style="height:44px;padding-left:'+(nm?'38px':'13px')+'"><div class="searchpop" id="'+prefix+'-pop"></div></div>';}
 function comboFilter(prefix,q){var inp=document.getElementById(prefix+'-in');if(!inp)return;var kind=inp.getAttribute('data-kind');var pop=document.getElementById(prefix+'-pop');if(!pop)return;q=String(q).trim().toLowerCase();var rows='';if(kind==='country'){if(!q){pop.classList.remove('on');return;}var res=COUNTRIES.filter(function(c){return c[1].toLowerCase().indexOf(q)>=0;}).slice(0,8);if(!res.length){rows='<div class="sp-empty">No countries found</div>';}else{rows=res.map(function(c){return '<div class="combo-row" data-action="combo-pick" data-prefix="'+prefix+'" data-val="'+c[0]+'">'+flag(c[0],'sm')+'<span style="font-size:13px">'+esc(c[1])+'</span></div>';}).join('');}}else{var rn=q?NAMES.filter(function(n){return n.toLowerCase().indexOf(q)>=0;}):NAMES.slice();rn=rn.slice(0,8);if(!rn.length){rows='<div class="sp-empty">No names found</div>';}else{rows=rn.map(function(n){return '<div class="combo-row" data-action="combo-pick" data-prefix="'+prefix+'" data-val="'+esc(n)+'">'+miniAv(n)+'<span style="font-size:13px">'+esc(n)+'</span></div>';}).join('');}}pop.innerHTML=rows;pop.classList.add('on');}
 function comboPick(prefix,val){comboSel[prefix]=val;var inp=document.getElementById(prefix+'-in');if(!inp)return;var kind=inp.getAttribute('data-kind');var label=val,fl='';if(kind==='country'){var c=COUNTRIES.find(function(x){return x[0]===val;});label=c?c[1]:val;fl=flag(val,'sm');inp.style.paddingLeft='40px';}else{fl=miniAv(val);inp.style.paddingLeft='38px';}inp.value=label;var fh=document.getElementById(prefix+'-fl');if(fh)fh.innerHTML=fl;var pop=document.getElementById(prefix+'-pop');if(pop)pop.classList.remove('on');}
-
+ 
 /* ===== help ===== */
 function openHelp(){
  var pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
